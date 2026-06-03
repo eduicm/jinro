@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>최신 AI 진로상담 논문 요약</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400;700;900&family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ── 토큰 ── */
+:root {
+  --bg:#05050a; --surface:rgba(255,255,255,0.03); --surface-h:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.07); --border-h:rgba(255,255,255,0.14);
+  --text:#f0f0f5; --text-mid:rgba(240,240,245,0.55); --text-dim:rgba(240,240,245,0.28);
+  --violet:#8b5cf6; --cyan:#06b6d4; --pink:#ec4899; --green:#10b981; --amber:#f59e0b;
+  --grad-main:linear-gradient(135deg,#8b5cf6 0%,#06b6d4 100%);
+  --grad-warm:linear-gradient(135deg,#ec4899 0%,#f59e0b 100%);
+  --grad-cool:linear-gradient(135deg,#06b6d4 0%,#10b981 100%);
+  --grad-deep:linear-gradient(135deg,#7c3aed 0%,#ec4899 100%);
+  --font-display:'Black Han Sans',sans-serif;
+  --font-num:'Unbounded',sans-serif;
+  --font-body:'Noto Sans KR',sans-serif;
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px; --r-2xl:24px; --r-full:9999px;
+  --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --dur-fast:150ms; --dur-mid:300ms; --dur-slow:600ms;
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.5);
+  --glow-v:0 0 40px rgba(139,92,246,0.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);
+  cursor:none;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.4);border-radius:2px;}
+
+/* ── fixed layers ── */
+#cursor-dot{position:fixed;pointer-events:none;z-index:9999;width:6px;height:6px;
+  border-radius:50%;background:var(--violet);transform:translate(-50%,-50%);
+  transition:width var(--dur-mid),height var(--dur-mid);}
+#cursor-ring{position:fixed;pointer-events:none;z-index:9998;width:36px;height:36px;
+  border-radius:50%;border:1px solid rgba(139,92,246,0.5);transform:translate(-50%,-50%);
+  transition:width var(--dur-mid),height var(--dur-mid),border-color var(--dur-mid);}
+#spotlight{position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),
+    rgba(139,92,246,0.06),transparent 70%);}
+#grid-overlay{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
+  background-size:60px 60px;}
+#aurora{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(120px);opacity:0.18;
+  animation:blobFloat var(--dur,20s) ease-in-out infinite alternate;}
+.blob-1{width:600px;height:600px;background:#8b5cf6;top:-100px;left:-100px;--dur:18s;}
+.blob-2{width:500px;height:500px;background:#06b6d4;top:30%;right:-120px;--dur:22s;}
+.blob-3{width:450px;height:450px;background:#ec4899;bottom:-80px;left:30%;--dur:25s;}
+.blob-4{width:350px;height:350px;background:#10b981;top:60%;left:10%;--dur:19s;}
+@keyframes blobFloat{
+  0%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(40px,-30px) scale(1.05);}
+  66%{transform:translate(-20px,50px) scale(0.95);}
+  100%{transform:translate(30px,20px) scale(1.02);}
+}
+#grain{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0.032;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:128px;}
+#progress{position:fixed;top:0;left:0;height:2px;z-index:9000;background:var(--grad-main);}
+
+/* ── nav ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:60px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 40px;
+  background:rgba(5,5,10,0.75);backdrop-filter:blur(24px) saturate(1.5);
+  border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--font-num);font-size:12px;font-weight:700;
+  background:var(--grad-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:0.06em;}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:11px;color:var(--text-mid);text-decoration:none;
+  transition:color var(--dur-fast);}
+.nav-links a:hover{color:var(--text);}
+.nav-pill{font-family:var(--font-num);font-size:9px;font-weight:700;
+  padding:5px 12px;border-radius:var(--r-full);
+  background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);
+  color:var(--violet);letter-spacing:0.06em;}
+
+/* ── common ── */
+.section{position:relative;z-index:3;padding:120px 40px;}
+.container{max-width:1120px;margin:0 auto;}
+.tag-label{font-family:var(--font-num);font-size:10px;font-weight:400;
+  letter-spacing:0.15em;text-transform:uppercase;color:var(--violet);
+  display:block;margin-bottom:16px;}
+.s-title{font-family:var(--font-display);font-size:clamp(36px,5vw,56px);
+  letter-spacing:-0.5px;line-height:1.1;margin-bottom:16px;}
+.s-desc{font-size:16px;color:var(--text-mid);line-height:1.9;font-weight:300;max-width:580px;}
+.grad-text{background:var(--grad-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2xl);
+  position:relative;overflow:hidden;
+  transition:background var(--dur-mid),border-color var(--dur-mid),
+    transform var(--dur-mid) var(--ease-spring),box-shadow var(--dur-mid);}
+.card:hover{background:var(--surface-h);border-color:var(--border-h);
+  transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.card::before{content:'';position:absolute;inset:0;border-radius:inherit;
+  background:var(--grad-main);opacity:0;transition:opacity var(--dur-mid);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;padding:1px;pointer-events:none;}
+.card:hover::before{opacity:1;}
+
+.tag{display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:var(--r-full);
+  font-family:var(--font-num);font-size:9px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;}
+.tag-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+.tag-v{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.25);color:#a78bfa;}
+.tag-c{background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.25);color:#22d3ee;}
+.tag-p{background:rgba(236,72,153,0.12);border:1px solid rgba(236,72,153,0.25);color:#f472b6;}
+.tag-g{background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);color:#34d399;}
+.tag-a{background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25);color:#fbbf24;}
+
+.reveal{opacity:0;transform:translateY(32px);
+  transition:opacity 0.7s var(--ease-out),transform 0.7s var(--ease-out);}
+.reveal.in{opacity:1;transform:none;}
+.d1{transition-delay:.05s}.d2{transition-delay:.12s}.d3{transition-delay:.19s}
+.d4{transition-delay:.26s}.d5{transition-delay:.33s}.d6{transition-delay:.40s}
+
+.btn-grad{background:var(--grad-main);color:#fff;border:none;
+  padding:12px 26px;border-radius:var(--r-full);cursor:pointer;
+  font-family:var(--font-body);font-weight:500;font-size:13px;
+  box-shadow:var(--glow-v);transition:all var(--dur-mid) var(--ease-spring);}
+.btn-grad:hover{transform:scale(1.05);box-shadow:0 0 50px rgba(139,92,246,0.5);}
+.btn-ghost{background:rgba(255,255,255,0.05);color:var(--text-mid);
+  border:1px solid var(--border-h);padding:12px 26px;border-radius:var(--r-full);
+  cursor:pointer;font-family:var(--font-body);font-size:13px;
+  transition:all var(--dur-mid);}
+.btn-ghost:hover{background:rgba(255,255,255,0.09);color:var(--text);}
+
+/* ── HERO ── */
+#hero{position:relative;z-index:3;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:100px 40px 80px;text-align:center;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-num);font-size:10px;font-weight:400;
+  letter-spacing:0.15em;text-transform:uppercase;color:var(--violet);
+  padding:6px 16px;border:1px solid rgba(139,92,246,0.3);border-radius:var(--r-full);
+  margin-bottom:40px;opacity:0;animation:fadeUp 0.7s 0.3s var(--ease-out) forwards;}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--violet);
+  animation:edot 2s infinite;}
+@keyframes edot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.6)}}
+.hero-year{font-family:var(--font-num);font-size:clamp(72px,12vw,160px);
+  font-weight:900;line-height:0.9;color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,0.07);letter-spacing:-6px;
+  display:block;margin-bottom:24px;
+  opacity:0;animation:fadeUp 0.8s 0.5s var(--ease-out) forwards;}
+.hero-h1{font-family:var(--font-display);font-size:clamp(44px,7vw,88px);
+  line-height:1.05;letter-spacing:-1px;margin-bottom:28px;
+  opacity:0;animation:fadeUp 0.8s 0.65s var(--ease-out) forwards;}
+.hero-sub{font-size:16px;color:var(--text-mid);line-height:1.9;
+  max-width:500px;margin:0 auto 48px;font-weight:300;
+  opacity:0;animation:fadeUp 0.7s 0.8s var(--ease-out) forwards;}
+.hero-btns{display:flex;gap:14px;justify-content:center;
+  opacity:0;animation:fadeUp 0.7s 0.95s var(--ease-out) forwards;}
+.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:var(--font-num);font-size:9px;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--text-dim);
+  opacity:0;animation:fadeIn 1s 1.4s ease forwards;}
+.scroll-line{width:1px;height:44px;
+  background:linear-gradient(to bottom,var(--violet),transparent);
+  animation:sline 2s ease-in-out infinite;}
+@keyframes sline{0%,100%{opacity:0.4}50%{opacity:1}}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@keyframes fadeIn{to{opacity:1}}
+
+/* ── STATS ── */
+#stats{background:transparent;}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.stats-grid .card:first-child{grid-column:span 2;}
+.stat-card{padding:40px 36px;}
+.stat-num{font-family:var(--font-num);font-weight:200;
+  font-size:clamp(44px,5vw,68px);line-height:1;letter-spacing:-3px;margin-bottom:8px;}
+.stat-num .u{font-size:0.38em;font-weight:400;letter-spacing:0;
+  background:var(--grad-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.stat-lbl{font-size:13px;color:var(--text-mid);line-height:1.6;font-weight:300;}
+.stat-line{margin-top:20px;width:0;height:2px;background:var(--grad-main);border-radius:1px;
+  transition:width 0.9s var(--ease-out);}
+.stat-card.in .stat-line{width:48px;}
+
+/* ── FILTER TABS ── */
+.filter-wrap{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+.filter-btn{font-family:var(--font-num);font-size:9px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:7px 16px;border-radius:var(--r-full);cursor:pointer;
+  border:1px solid var(--border-h);background:rgba(255,255,255,0.04);
+  color:var(--text-mid);transition:all var(--dur-mid);}
+.filter-btn:hover{background:rgba(255,255,255,0.08);color:var(--text);}
+.filter-btn.active{background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.4);
+  color:var(--violet);}
+
+/* ── PAPER CARDS ── */
+.papers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.paper-card{padding:32px;display:flex;flex-direction:column;gap:0;}
+.paper-card.hidden{display:none;}
+.paper-meta{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.paper-num{font-family:var(--font-num);font-size:9px;font-weight:700;
+  color:var(--text-dim);letter-spacing:0.1em;}
+.paper-title{font-family:var(--font-display);font-size:18px;
+  color:var(--text);margin-bottom:10px;line-height:1.4;}
+.paper-journal{font-family:var(--font-num);font-size:9px;
+  color:var(--text-dim);letter-spacing:0.06em;margin-bottom:18px;}
+.paper-summary{font-size:13px;color:var(--text-mid);line-height:1.85;
+  font-weight:300;flex:1;}
+.paper-key{margin-top:18px;padding-top:16px;
+  border-top:1px solid rgba(255,255,255,0.05);}
+.paper-key-label{font-family:var(--font-num);font-size:9px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);
+  margin-bottom:10px;display:block;}
+.key-item{display:flex;align-items:flex-start;gap:8px;
+  font-size:12px;color:var(--text-mid);padding:4px 0;font-weight:300;line-height:1.5;}
+.key-item::before{content:'→';font-family:var(--font-num);font-size:10px;
+  color:var(--violet);flex-shrink:0;margin-top:1px;}
+.paper-link{margin-top:16px;display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-num);font-size:9px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--violet);text-decoration:none;
+  transition:gap var(--dur-mid);}
+.paper-link:hover{gap:10px;}
+
+/* ── 다운로드 버튼 영역 ── */
+.paper-actions{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.btn-dl{display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:var(--r-full);
+  font-family:var(--font-num);font-size:9px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;border:none;
+  transition:all var(--dur-mid) var(--ease-spring);}
+.btn-dl-free{background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.35);
+  color:#34d399;}
+.btn-dl-free:hover{background:rgba(16,185,129,0.25);transform:scale(1.04);
+  box-shadow:0 0 20px rgba(16,185,129,0.25);}
+.btn-dl-view{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.3);
+  color:#a78bfa;}
+.btn-dl-view:hover{background:rgba(139,92,246,0.22);transform:scale(1.04);}
+.btn-dl-login{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+  color:var(--text-dim);}
+.btn-dl-login:hover{background:rgba(255,255,255,0.08);color:var(--text-mid);}
+.dl-icon{font-size:10px;}
+
+/* ── TRENDS ── */
+#trends{background:transparent;}
+.gen-timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:60px;}
+.gen-card{padding:36px 32px;}
+.gen-era{font-family:var(--font-num);font-size:10px;font-weight:700;
+  letter-spacing:0.1em;color:var(--text-dim);margin-bottom:16px;}
+.gen-num{font-family:var(--font-num);font-size:56px;font-weight:900;line-height:1;
+  letter-spacing:-3px;margin-bottom:16px;color:rgba(255,255,255,0.06);}
+.gen-title{font-family:var(--font-display);font-size:20px;margin-bottom:12px;}
+.gen-tech{font-family:var(--font-num);font-size:10px;font-weight:700;
+  letter-spacing:0.08em;margin-bottom:16px;}
+.gen-desc{font-size:13px;color:var(--text-mid);line-height:1.85;font-weight:300;}
+
+/* ── STRENGTHS/LIMITS ── */
+#balance{background:transparent;}
+.balance-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:60px;}
+.balance-card{padding:40px 36px;}
+.balance-header{font-family:var(--font-num);font-size:10px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;margin-bottom:24px;}
+.balance-item{display:flex;align-items:flex-start;gap:14px;
+  padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.balance-item:last-child{border-bottom:none;}
+.balance-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.balance-item-title{font-size:14px;font-weight:500;margin-bottom:4px;}
+.balance-item-desc{font-size:12px;color:var(--text-mid);line-height:1.6;font-weight:300;}
+
+/* ── SURVEY ── */
+#survey{background:transparent;}
+.survey-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:14px;margin-top:60px;align-items:start;}
+.survey-big{padding:56px 48px;}
+.survey-number{font-family:var(--font-num);font-size:clamp(80px,10vw,120px);
+  font-weight:900;letter-spacing:-6px;line-height:1;
+  background:var(--grad-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.survey-sub{font-size:14px;color:var(--text-mid);margin-top:12px;font-weight:300;line-height:1.7;}
+.survey-bars{padding:36px;}
+.bar-label{font-family:var(--font-num);font-size:9px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;}
+.bar-item{margin-bottom:20px;}
+.bar-item:last-child{margin-bottom:0;}
+.bar-info{display:flex;justify-content:space-between;margin-bottom:8px;}
+.bar-name{font-size:13px;color:var(--text-mid);font-weight:300;}
+.bar-pct{font-family:var(--font-num);font-size:11px;font-weight:700;}
+.bar-track{height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:2px;width:0;transition:width 1.2s var(--ease-out);}
+
+/* ── RECOMMENDATIONS ── */
+#recs{background:transparent;}
+.recs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:60px;}
+.rec-card{padding:32px 24px;}
+.rec-num{font-family:var(--font-num);font-size:40px;font-weight:900;line-height:1;
+  letter-spacing:-2px;color:rgba(255,255,255,0.05);margin-bottom:16px;}
+.rec-title{font-family:var(--font-display);font-size:17px;margin-bottom:12px;line-height:1.3;}
+.rec-desc{font-size:12px;color:var(--text-mid);line-height:1.8;font-weight:300;}
+
+/* ── CLOSING ── */
+#closing{position:relative;z-index:3;padding:160px 40px;text-align:center;overflow:hidden;}
+.closing-glow{position:absolute;bottom:-40%;left:50%;transform:translateX(-50%);
+  width:800px;height:500px;
+  background:radial-gradient(ellipse,rgba(139,92,246,0.18) 0%,transparent 70%);
+  pointer-events:none;}
+.closing-inner{position:relative;z-index:1;max-width:680px;margin:0 auto;}
+.closing-eyebrow{font-family:var(--font-num);font-size:10px;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--violet);
+  margin-bottom:24px;display:block;}
+.closing-title{font-family:var(--font-display);font-size:clamp(36px,5vw,60px);
+  line-height:1.1;letter-spacing:-1px;margin-bottom:24px;}
+.closing-desc{font-size:16px;color:var(--text-mid);line-height:1.9;
+  max-width:520px;margin:0 auto 48px;font-weight:300;}
+.closing-div{width:1px;height:56px;background:linear-gradient(to bottom,rgba(139,92,246,0.5),transparent);
+  margin:40px auto 24px;}
+.closing-source{font-family:var(--font-num);font-size:9px;
+  color:var(--text-dim);letter-spacing:0.08em;}
+
+@media(max-width:900px){
+  .stats-grid,.papers-grid,.gen-timeline,.balance-grid,.recs-grid{grid-template-columns:1fr 1fr;}
+  .stats-grid .card:first-child{grid-column:span 2;}
+  .survey-inner{grid-template-columns:1fr;}
+  nav .nav-links{display:none;}
+}
+@media(max-width:560px){
+  .stats-grid,.papers-grid,.gen-timeline,.recs-grid{grid-template-columns:1fr;}
+  .stats-grid .card:first-child{grid-column:span 1;}
+  .balance-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- fixed layers -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<div id="spotlight"></div>
+<div id="grid-overlay"></div>
+<div id="aurora">
+  <div class="blob blob-1"></div><div class="blob blob-2"></div>
+  <div class="blob blob-3"></div><div class="blob blob-4"></div>
+</div>
+<div id="grain"></div>
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AI·CAREER·RESEARCH</div>
+  <ul class="nav-links">
+    <li><a href="#papers">논문</a></li>
+    <li><a href="#trends">세대별 동향</a></li>
+    <li><a href="#balance">강점·한계</a></li>
+    <li><a href="#survey">인식조사</a></li>
+    <li><a href="#recs">제언</a></li>
+  </ul>
+  <div class="nav-pill">2024–2026</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow"><span class="eyebrow-dot"></span>Literature Review · AI Career Counseling</div>
+  <span class="hero-year">2026</span>
+  <h1 class="hero-h1">최신 AI 진로상담<br><span class="grad-text">논문 요약</span></h1>
+  <p class="hero-sub">2024–2026년 국내외 주요 연구 12편을 분석한<br>AI 진로상담 연구 동향 리포트</p>
+  <div class="hero-btns">
+    <button class="btn-grad" onclick="document.getElementById('papers').scrollIntoView({behavior:'smooth'})">논문 살펴보기</button>
+    <button class="btn-ghost" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">핵심 수치 →</button>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span>scroll</span></div>
+</section>
+
+<!-- STATS -->
+<section id="stats" class="section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="card stat-card reveal d1">
+        <div class="stat-num"><span class="counter" data-to="12">0</span><span class="u">편</span></div>
+        <div class="stat-lbl">분석 대상 논문<br>(국내 5 · 국제 7)</div>
+        <div class="stat-line"></div>
+      </div>
+      <div class="card stat-card reveal d2">
+        <div class="stat-num"><span class="counter" data-to="17">0</span><span class="u">개</span></div>
+        <div class="stat-lbl">AI 활용 가능<br>직업상담 직무</div>
+        <div class="stat-line"></div>
+      </div>
+      <div class="card stat-card reveal d3">
+        <div class="stat-num"><span class="counter" data-to="80">0</span><span class="u">%</span></div>
+        <div class="stat-lbl">인간 상담사 선호<br>(공감 필요 상황)</div>
+        <div class="stat-line"></div>
+      </div>
+      <div class="card stat-card reveal d4">
+        <div class="stat-num"><span class="counter" data-to="10">0</span><span class="u">년</span></div>
+        <div class="stat-lbl">체계적 문헌고찰<br>연구 범위(2015~2025)</div>
+        <div class="stat-line"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAPERS -->
+<section id="papers" class="section">
+  <div class="container">
+    <div class="reveal">
+      <span class="tag-label">Research Papers</span>
+      <h2 class="s-title">논문별 요약</h2>
+      <p class="s-desc">국내외 최신 AI 진로상담 연구 12편의 핵심 내용을 정리했습니다.</p>
+    </div>
+
+    <!-- filter -->
+    <!-- 다운로드 범례 -->
+    <div class="reveal" style="margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;padding:16px 20px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r-lg);">
+      <span style="font-family:var(--font-num);font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim)">다운로드 안내</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#34d399"><span style="font-size:10px">⬇</span> PDF 무료 다운로드 — 즉시 저장 가능 (오픈 액세스)</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#a78bfa"><span style="font-size:10px">🔗</span> 원문 보기 — 웹에서 열람 가능</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--text-dim)"><span style="font-size:10px">🔒</span> 로그인/가입 필요 — KCI 회원 or ResearchGate 가입(무료)</span>
+    </div>
+
+    <div class="filter-wrap reveal" style="margin-top:20px">
+      <button class="filter-btn active" data-filter="all">전체</button>
+      <button class="filter-btn" data-filter="kr">국내 논문</button>
+      <button class="filter-btn" data-filter="intl">국제 논문</button>
+      <button class="filter-btn" data-filter="system">시스템 개발</button>
+      <button class="filter-btn" data-filter="review">문헌고찰</button>
+      <button class="filter-btn" data-filter="empirical">실증 연구</button>
+    </div>
+
+    <div class="papers-grid" id="papers-grid">
+
+      <!-- 논문 1 -->
+      <div class="card paper-card reveal d1" data-cats="kr empirical">
+        <div class="paper-meta">
+          <span class="paper-num">01</span>
+          <span class="tag tag-v"><span class="tag-dot"></span>KCI</span>
+          <span class="tag tag-a"><span class="tag-dot"></span>2025</span>
+        </div>
+        <div class="paper-title">교육분야 디지털 전환과 AI 기반 진로상담 플랫폼 운영 전략</div>
+        <div class="paper-journal">e-비즈니스연구 · 노성 (2025)</div>
+        <div class="paper-summary">전북 중·고 진로교사 50명 + 학생 200명 대상 설문 연구. AI 기반 진로추천 시스템이 상담의 개인화와 접근성 향상에 실질적으로 기여함을 실증.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">핵심 결과</span>
+          <div class="key-item">AI 플랫폼 활용 교사·학생, 진로 정보 탐색 만족도 높음</div>
+          <div class="key-item">한계: 교사 배치 격차·사용자 교육 부족·거버넌스 미비</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-view" href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003201005" target="_blank"><span class="dl-icon">🔗</span>KCI 원문 보기</a>
+          <span class="btn-dl btn-dl-login" title="KCI 회원 로그인 후 PDF 다운로드 가능"><span class="dl-icon">🔒</span>PDF — 로그인 필요</span>
+        </div>
+      </div>
+
+      <!-- 논문 2 -->
+      <div class="card paper-card reveal d2" data-cats="kr empirical">
+        <div class="paper-meta">
+          <span class="paper-num">02</span>
+          <span class="tag tag-v"><span class="tag-dot"></span>KCI</span>
+          <span class="tag tag-a"><span class="tag-dot"></span>2024</span>
+        </div>
+        <div class="paper-title">직업상담사의 생성형 AI 활용경험 및 인식</div>
+        <div class="paper-journal">실천공학교육학회 논문지 · 배상호·강혜영 (2024)</div>
+        <div class="paper-summary">현직 직업상담사를 대상으로 생성형 AI 활용 방식과 인식을 탐색. 40개 대표 직무 중 17개에서 AI 활용 가능성이 높은 것으로 확인.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">핵심 결과</span>
+          <div class="key-item">자소서 분석·상담일지 작성·진로정보 탐색 AI 활용 효과적</div>
+          <div class="key-item">요구 역량: AI 문해력·비판적 사고·도메인 지식·윤리 감수성</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-view" href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003112263" target="_blank"><span class="dl-icon">🔗</span>KCI 원문 보기</a>
+          <span class="btn-dl btn-dl-login" title="KCI 회원 로그인 후 PDF 다운로드 가능"><span class="dl-icon">🔒</span>PDF — 로그인 필요</span>
+        </div>
+      </div>
+
+      <!-- 논문 3 -->
+      <div class="card paper-card reveal d3" data-cats="kr system">
+        <div class="paper-meta">
+          <span class="paper-num">03</span>
+          <span class="tag tag-v"><span class="tag-dot"></span>국내</span>
+          <span class="tag tag-c"><span class="tag-dot"></span>시스템</span>
+        </div>
+        <div class="paper-title">인공지능 기반 진로/진학 서비스 프로토타입 개발 연구</div>
+        <div class="paper-journal">한국정보통신학회논문지</div>
+        <div class="paper-summary">교사용·학생용 이원 구조 AI 진로/진학 서비스 프로토타입을 개발. AI가 학생 성취도·흥미·활동이력을 분석해 맞춤 진로 경로를 제시.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">시스템 구성</span>
+          <div class="key-item">교사용: 반 전체 진로 현황 대시보드 시각화</div>
+          <div class="key-item">학생용: 대화형 AI 에이전트로 진로 탐색 지원</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-view" href="http://journal.dcs.or.kr/_PR/view/?aidx=40124&bidx=3616" target="_blank"><span class="dl-icon">🔗</span>원문 보기</a>
+          <span class="btn-dl btn-dl-login"><span class="dl-icon">🔒</span>PDF — 로그인 필요</span>
+        </div>
+      </div>
+
+      <!-- 논문 4 -->
+      <div class="card paper-card reveal d1" data-cats="kr review">
+        <div class="paper-meta">
+          <span class="paper-num">04</span>
+          <span class="tag tag-v"><span class="tag-dot"></span>KCI</span>
+          <span class="tag tag-p"><span class="tag-dot"></span>고찰</span>
+        </div>
+        <div class="paper-title">AI 기술과 심리 상담의 융합 가능성과 한계에 대한 고찰</div>
+        <div class="paper-journal">KCI 등재 학술지</div>
+        <div class="paper-summary">AI 상담의 잠재력(24/7 접근성, 비용 절감, 낙인 없는 상담)과 핵심 한계(공감 부재, 위기 대처 불능, 개인정보 취약)를 종합적으로 고찰.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">핵심 논점</span>
+          <div class="key-item">AI와 인간 상담사의 상호보완적 협업 모델 필요</div>
+          <div class="key-item">AI는 정보 제공, 인간은 정서적 지지·판단 담당</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-view" href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003172619" target="_blank"><span class="dl-icon">🔗</span>KCI 원문 보기</a>
+          <span class="btn-dl btn-dl-login"><span class="dl-icon">🔒</span>PDF — 로그인 필요</span>
+        </div>
+      </div>
+
+      <!-- 논문 5 -->
+      <div class="card paper-card reveal d2" data-cats="kr system">
+        <div class="paper-meta">
+          <span class="paper-num">05</span>
+          <span class="tag tag-g"><span class="tag-dot"></span>서울대</span>
+          <span class="tag tag-c"><span class="tag-dot"></span>RAG</span>
+        </div>
+        <div class="paper-title">RAG 기반 생성형 AI를 활용한 맞춤형 진로·경력개발 시스템</div>
+        <div class="paper-journal">서울대 TECHA 연구실</div>
+        <div class="paper-summary">RAG(Retrieval-Augmented Generation) + Fine-Tuning으로 맞춤형 경력 평가·처방 시스템 구축. 최신 직업 DB와 실시간 연동해 정확한 직업정보를 제공.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">기술 특징</span>
+          <div class="key-item">실시간 직업 DB 연동으로 최신 정보 제공</div>
+          <div class="key-item">개인 이력·역량 데이터와 결합한 개인화 설계</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-view" href="https://techa.snu.ac.kr" target="_blank"><span class="dl-icon">🔗</span>연구실 보기</a>
+          <span class="btn-dl btn-dl-login"><span class="dl-icon">🔒</span>논문 요청 필요</span>
+        </div>
+      </div>
+
+      <!-- 논문 6 -->
+      <div class="card paper-card reveal d3" data-cats="intl review">
+        <div class="paper-meta">
+          <span class="paper-num">06</span>
+          <span class="tag tag-c"><span class="tag-dot"></span>Frontiers</span>
+          <span class="tag tag-a"><span class="tag-dot"></span>2026</span>
+        </div>
+        <div class="paper-title">Implementation of AI in career counselling for university students: a systematic review</div>
+        <div class="paper-journal">Frontiers in Education (2026)</div>
+        <div class="paper-summary">2015~2025년 10년간 대학 진로상담 AI 구현 연구를 체계적으로 검토. 생성형 챗봇·예측 분석·추천 생태계 3유형 분류.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">AI 구현 유형</span>
+          <div class="key-item">챗봇: 24/7 접근성 강점, 공감 부족 한계</div>
+          <div class="key-item">예측 분석: 취업 가능성 예측, 설명가능성 필요</div>
+          <div class="key-item">추천 생태계: 직업 매칭, 데이터 편향 위험</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-free" href="https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2026.1787689/pdf" target="_blank" download><span class="dl-icon">⬇</span>PDF 무료 다운로드</a>
+          <a class="btn-dl btn-dl-view" href="https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2026.1787689/full" target="_blank"><span class="dl-icon">🔗</span>원문 보기</a>
+        </div>
+      </div>
+
+      <!-- 논문 7 -->
+      <div class="card paper-card reveal d1" data-cats="intl empirical">
+        <div class="paper-meta">
+          <span class="paper-num">07</span>
+          <span class="tag tag-g"><span class="tag-dot"></span>PMC</span>
+          <span class="tag tag-a"><span class="tag-dot"></span>2025</span>
+        </div>
+        <div class="paper-title">Can ChatGPT Boost Students' Employment Confidence?</div>
+        <div class="paper-journal">PubMed Central (2025)</div>
+        <div class="paper-summary">ChatGPT 정기 활용이 학생의 취업 자신감을 유의미하게 향상시킴. 단, 실제 지식 향상에는 효과 없음 — "메타인지적 게으름" 현상 관찰.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">핵심 발견</span>
+          <div class="key-item">자신감↑: 학부생·사회과학 계열에서 더 강한 효과</div>
+          <div class="key-item">주의: AI 의존이 자기성찰 능력 약화 가능</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-free" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11939219/pdf/" target="_blank" download><span class="dl-icon">⬇</span>PDF 무료 다운로드</a>
+          <a class="btn-dl btn-dl-view" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11939219/" target="_blank"><span class="dl-icon">🔗</span>PMC 원문 보기</a>
+        </div>
+      </div>
+
+      <!-- 논문 8 -->
+      <div class="card paper-card reveal d2" data-cats="intl system">
+        <div class="paper-meta">
+          <span class="paper-num">08</span>
+          <span class="tag tag-c"><span class="tag-dot"></span>IJSRA</span>
+          <span class="tag tag-a"><span class="tag-dot"></span>2025</span>
+        </div>
+        <div class="paper-title">AI-based career counsellor: An AI driven career advisor</div>
+        <div class="paper-journal">Int'l Journal of Science and Research Archive (2025)</div>
+        <div class="paper-summary">중등 학생 대상 AI 진로상담 시스템 프로토타입 설계. 학생 프로파일 → NLP 분석 → 직업 추천 → 이력서 피드백 자동 생성 파이프라인.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">시스템 파이프라인</span>
+          <div class="key-item">프로파일 입력 → NLP 관심사·강점 분석</div>
+          <div class="key-item">직업 추천 + 이력서 최적화 피드백 자동 생성</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-free" href="https://ijsra.net/sites/default/files/fulltext_pdf/IJSRA-2025-1088.pdf" target="_blank" download><span class="dl-icon">⬇</span>PDF 무료 다운로드</a>
+        </div>
+      </div>
+
+      <!-- 논문 9 -->
+      <div class="card paper-card reveal d3" data-cats="intl empirical">
+        <div class="paper-meta">
+          <span class="paper-num">09</span>
+          <span class="tag tag-p"><span class="tag-dot"></span>arXiv</span>
+          <span class="tag tag-a"><span class="tag-dot"></span>2025</span>
+        </div>
+        <div class="paper-title">Evaluating LLMs for Career Guidance: Comparative Analysis</div>
+        <div class="paper-journal">arXiv (2025)</div>
+        <div class="paper-summary">GPT-4, Claude, Gemini 등 주요 LLM을 진로 가이던스 품질로 비교 평가. LLM마다 직업 정보 정확성·최신성에 유의미한 차이 존재.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">주요 결과</span>
+          <div class="key-item">GPT-4: 맥락 이해 우수, 최신 취업시장 반영 한계</div>
+          <div class="key-item">Human-in-the-loop 설계의 필요성 강조</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-free" href="https://arxiv.org/pdf/2510.18902" target="_blank" download><span class="dl-icon">⬇</span>PDF 무료 다운로드</a>
+          <a class="btn-dl btn-dl-view" href="https://arxiv.org/abs/2510.18902" target="_blank"><span class="dl-icon">🔗</span>arXiv 보기</a>
+        </div>
+      </div>
+
+      <!-- 논문 10 -->
+      <div class="card paper-card reveal d1" data-cats="intl review">
+        <div class="paper-meta">
+          <span class="paper-num">10</span>
+          <span class="tag tag-p"><span class="tag-dot"></span>ResearchGate</span>
+          <span class="tag tag-a"><span class="tag-dot"></span>2024</span>
+        </div>
+        <div class="paper-title">Conversational AI for Career Counseling</div>
+        <div class="paper-journal">ResearchGate (2024)</div>
+        <div class="paper-summary">대화형 AI가 진로 탐색 단계에서 학생의 자기효능감을 증진. AI의 공감 시뮬레이션은 실제 상담 관계를 대체 불가 — 의사결정 단계에 인간 개입 필요.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">제안 모델</span>
+          <div class="key-item">AI: 초기 탐색·정보 제공 단계 담당</div>
+          <div class="key-item">인간 상담사: 의사결정·정서 지지 단계 담당</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-view" href="https://www.researchgate.net/publication/381944980_Conversational_AI_for_Career_Counseling" target="_blank"><span class="dl-icon">🔗</span>ResearchGate 보기</a>
+          <span class="btn-dl btn-dl-login" title="ResearchGate 가입(무료) 후 PDF 다운로드 가능"><span class="dl-icon">🔒</span>PDF — 무료 가입 후</span>
+        </div>
+      </div>
+
+      <!-- 논문 11 -->
+      <div class="card paper-card reveal d2" data-cats="intl review">
+        <div class="paper-meta">
+          <span class="paper-num">11</span>
+          <span class="tag tag-g"><span class="tag-dot"></span>APCDA</span>
+          <span class="tag tag-a"><span class="tag-dot"></span>2025</span>
+        </div>
+        <div class="paper-title">Artificial Intelligence in Career Coaching and Development</div>
+        <div class="paper-journal">Asia Pacific Career Development Association (2025)</div>
+        <div class="paper-summary">AI는 진로코칭에서 보완적 도구로 기능해야 함. 지역·교육 환경에 따른 접근 형평성 문제 제기. 상담사의 새 역할: AI 결과를 해석하는 '메타 코치'.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">핵심 논점</span>
+          <div class="key-item">형평성: 지역·계층별 AI 접근 격차 문제</div>
+          <div class="key-item">상담사 역할 재정의: 메타 코치로 전환</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-free" href="https://asiapacificcda.org/wp-content/uploads/2025/07/apcda_cp0002_04.pdf" target="_blank" download><span class="dl-icon">⬇</span>PDF 무료 다운로드</a>
+        </div>
+      </div>
+
+      <!-- 논문 12 -->
+      <div class="card paper-card reveal d3" data-cats="intl empirical">
+        <div class="paper-meta">
+          <span class="paper-num">12</span>
+          <span class="tag tag-g"><span class="tag-dot"></span>PMC</span>
+          <span class="tag tag-a"><span class="tag-dot"></span>2025</span>
+        </div>
+        <div class="paper-title">AI trust and protean career among university students</div>
+        <div class="paper-journal">Frontiers in Psychology / PMC (2025)</div>
+        <div class="paper-summary">AI 신뢰도가 대학생의 자기주도적 진로(Protean Career) 개발에 정적 영향. 내재적 동기가 매개 효과, 직업 불안정성 인식이 조절 효과.</div>
+        <div class="paper-key">
+          <span class="paper-key-label">연구 모델</span>
+          <div class="key-item">AI 신뢰 → 내재적 동기 → 자기주도 진로 개발</div>
+          <div class="key-item">시사점: AI 신뢰 구축이 진로 자율성의 선행 조건</div>
+        </div>
+        <div class="paper-actions">
+          <a class="btn-dl btn-dl-free" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12876185/pdf/" target="_blank" download><span class="dl-icon">⬇</span>PDF 무료 다운로드</a>
+          <a class="btn-dl btn-dl-view" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12876185/" target="_blank"><span class="dl-icon">🔗</span>PMC 원문 보기</a>
+        </div>
+      </div>
+
+    </div><!-- /papers-grid -->
+  </div>
+</section>
+
+<!-- GENERATION TIMELINE -->
+<section id="trends" class="section">
+  <div class="container">
+    <div class="reveal">
+      <span class="tag-label">Technology Evolution</span>
+      <h2 class="s-title">AI 진로상담<br><span class="grad-text">3세대 기술 변화</span></h2>
+      <p class="s-desc">규칙 기반에서 생성형 AI까지, 10년간의 기술 진화를 정리했습니다.</p>
+    </div>
+    <div class="gen-timeline">
+      <div class="card gen-card reveal d1">
+        <div class="gen-era">1st Generation · 2015–2020</div>
+        <div class="gen-num">01</div>
+        <div class="gen-title">규칙 기반<br>추천 엔진</div>
+        <div class="gen-tech" style="color:var(--text-dim)">Rule-Based System</div>
+        <div class="gen-desc">키워드 매칭과 단순 직업 추천. 미리 정의된 규칙에 따라 정형화된 결과를 제공. 개인화 없이 일괄적인 정보 제공.</div>
+      </div>
+      <div class="card gen-card reveal d2">
+        <div class="gen-era">2nd Generation · 2020–2023</div>
+        <div class="gen-num">02</div>
+        <div class="gen-title">ML 기반<br>예측 모델</div>
+        <div class="gen-tech" style="color:var(--cyan)">Machine Learning</div>
+        <div class="gen-desc">취업 가능성 예측과 역량 갭 분석. 데이터 기반의 개인화 추천이 시작됨. 설명 가능성(XAI) 요구 증가.</div>
+      </div>
+      <div class="card gen-card reveal d3">
+        <div class="gen-era">3rd Generation · 2023–현재</div>
+        <div class="gen-num">03</div>
+        <div class="gen-title">생성형 AI<br>대화 에이전트</div>
+        <div class="gen-tech" style="color:var(--violet)">Generative AI · LLM</div>
+        <div class="gen-desc">자연어 대화, 맥락 이해, 맞춤형 내러티브 생성. ChatGPT·Claude·Gemini 등이 진로 탐색에 활용됨. Human-in-the-loop 설계가 핵심 과제.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BALANCE -->
+<section id="balance" class="section">
+  <div class="container">
+    <div class="reveal">
+      <span class="tag-label">Research Findings</span>
+      <h2 class="s-title">AI 진로상담의<br>강점과 한계</h2>
+    </div>
+    <div class="balance-grid">
+      <div class="card balance-card reveal d1">
+        <div class="balance-header" style="color:var(--green)">✓ 연구에서 확인된 강점</div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--green)"></div>
+          <div><div class="balance-item-title">24/7 접근성</div><div class="balance-item-desc">시간·장소 제약 없이 언제든 상담 가능. 야간·주말 학생 지원 가능.</div></div>
+        </div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--green)"></div>
+          <div><div class="balance-item-title">낙인 제거</div><div class="balance-item-desc">진로 고민을 사람에게 말하기 어려운 학생도 AI에게는 개방적으로 탐색.</div></div>
+        </div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--green)"></div>
+          <div><div class="balance-item-title">개인화</div><div class="balance-item-desc">대규모 데이터 분석을 통한 맞춤 추천. 학생별 강점·흥미·성취 연계.</div></div>
+        </div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--green)"></div>
+          <div><div class="balance-item-title">일관성</div><div class="balance-item-desc">상담사 편차 없는 표준화된 정보 제공. 대규모 학생 동시 지원 가능.</div></div>
+        </div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--green)"></div>
+          <div><div class="balance-item-title">취업 자신감 향상</div><div class="balance-item-desc">ChatGPT 정기 활용이 학생의 취업 자신감을 유의미하게 향상 (PMC, 2025).</div></div>
+        </div>
+      </div>
+      <div class="card balance-card reveal d2">
+        <div class="balance-header" style="color:var(--pink)">✗ 연구에서 확인된 한계</div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--pink)"></div>
+          <div><div class="balance-item-title">공감 부재</div><div class="balance-item-desc">깊은 정서적 지지가 필요한 상황 대처 불능. 공감 시뮬레이션은 실제 관계 대체 불가.</div></div>
+        </div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--pink)"></div>
+          <div><div class="balance-item-title">위기 대응 불능</div><div class="balance-item-desc">자해·우울 등 심리적 위기 학생 식별·대처 한계. 전문 상담 연계 필수.</div></div>
+        </div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--pink)"></div>
+          <div><div class="balance-item-title">메타인지 저하</div><div class="balance-item-desc">AI 의존이 학생의 자기성찰·자기조절 능력 약화 유발. "메타인지적 게으름" 현상.</div></div>
+        </div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--pink)"></div>
+          <div><div class="balance-item-title">데이터 편향</div><div class="balance-item-desc">특정 집단(성별·지역·계층)에 불리한 직업 추천 가능성. 공정성 검증 필요.</div></div>
+        </div>
+        <div class="balance-item">
+          <div class="balance-dot" style="background:var(--pink)"></div>
+          <div><div class="balance-item-title">종단 데이터 부족</div><div class="balance-item-desc">단기 만족도 중심 연구, 실제 장기 진로 성과 검증 연구 부재.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SURVEY -->
+<section id="survey" class="section">
+  <div class="container">
+    <div class="reveal">
+      <span class="tag-label">Public Perception · 2025</span>
+      <h2 class="s-title">국내 AI 진로상담<br>인식 조사</h2>
+      <p class="s-desc">한국일보 여론조사 (2025) — 인간 상담사 vs AI 상담사 인식</p>
+    </div>
+    <div class="survey-inner">
+      <div class="card survey-big reveal d1">
+        <span class="tag tag-p" style="margin-bottom:20px;display:inline-flex"><span class="tag-dot"></span>인간 상담사 선호</span>
+        <div class="survey-number counter" data-to="80">0</div>
+        <div class="survey-sub">
+          %가 "깊은 감정적 공감이 필요한 경우"에<br>인간 상담사가 적합하다고 응답<br>
+          <span style="color:var(--text-dim);font-size:11px">(한국일보 여론조사, 2025)</span>
+        </div>
+      </div>
+      <div class="card survey-bars reveal d2" id="survey-bars">
+        <div class="bar-label">인간 상담사 선호 상황 (복수응답)</div>
+        <div class="bar-item">
+          <div class="bar-info">
+            <span class="bar-name">깊은 감정적 공감이 필요한 경우</span>
+            <span class="bar-pct" style="color:var(--pink)">80%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--grad-warm)" data-w="80%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-info">
+            <span class="bar-name">윤리적 판단·조언이 필요한 경우</span>
+            <span class="bar-pct" style="color:var(--violet)">57%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--grad-main)" data-w="57%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-info">
+            <span class="bar-name">개인 맞춤형 상담이 필요한 경우</span>
+            <span class="bar-pct" style="color:var(--cyan)">55%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--grad-cool)" data-w="55%"></div></div>
+        </div>
+        <div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06)">
+          <div class="bar-label" style="color:var(--green)">AI 상담사 강점으로 응답한 항목</div>
+          <div class="bar-item">
+            <div class="bar-info">
+              <span class="bar-name">비용 저렴함</span>
+              <span class="bar-pct" style="color:var(--green)">1순위</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="background:var(--grad-cool)" data-w="88%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-info">
+              <span class="bar-name">24시간 편의성</span>
+              <span class="bar-pct" style="color:var(--green)">2순위</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="background:var(--grad-cool)" data-w="75%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMMENDATIONS -->
+<section id="recs" class="section">
+  <div class="container">
+    <div class="reveal">
+      <span class="tag-label">Research Consensus</span>
+      <h2 class="s-title">연구 공통 제언<br><span class="grad-text">5가지</span></h2>
+      <p class="s-desc">12편의 논문이 공통적으로 강조하는 정책·실천 방향입니다.</p>
+    </div>
+    <div class="recs-grid">
+      <div class="card rec-card reveal d1">
+        <div class="rec-num">01</div>
+        <div class="rec-title">Human-AI 협업 모델</div>
+        <div class="rec-desc">AI는 정보 탐색·초기 탐색, 인간 상담사는 의사결정·정서적 지지 단계를 분담하는 구조적 설계.</div>
+      </div>
+      <div class="card rec-card reveal d2">
+        <div class="rec-num">02</div>
+        <div class="rec-title">AI 문해력 교육</div>
+        <div class="rec-desc">학생·교사 모두 AI 결과를 비판적으로 해석하는 능력 필요. 메타인지 저하 방지를 위한 교육 설계.</div>
+      </div>
+      <div class="card rec-card reveal d3">
+        <div class="rec-num">03</div>
+        <div class="rec-title">공정성 검증</div>
+        <div class="rec-desc">성별·지역·계층별 추천 편향을 지속 모니터링. 취약 집단에 대한 알고리즘 공정성 보장 필요.</div>
+      </div>
+      <div class="card rec-card reveal d4">
+        <div class="rec-num">04</div>
+        <div class="rec-title">종단 연구 확대</div>
+        <div class="rec-desc">단기 만족도를 넘어 실제 진로 성과를 추적하는 장기 종단 데이터 연구 필요.</div>
+      </div>
+      <div class="card rec-card reveal d5">
+        <div class="rec-num">05</div>
+        <div class="rec-title">거버넌스 구축</div>
+        <div class="rec-desc">진로상담 AI 데이터 수집·활용 기준의 법제화. 개인정보 보호와 투명성 확보를 위한 제도 마련.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section id="closing">
+  <div class="closing-glow"></div>
+  <div class="closing-inner reveal">
+    <span class="closing-eyebrow">Conclusion · AI Career Counseling Research</span>
+    <h2 class="closing-title">AI는 도구다<br><span class="grad-text">상담사는 동반자다</span></h2>
+    <p class="closing-desc">12편의 연구가 공통적으로 말하는 결론 — AI는 진로상담을 대체하지 않는다. 상담사가 더 깊은 인간적 역할에 집중할 수 있도록 돕는 도구다.</p>
+    <div class="hero-btns">
+      <button class="btn-grad" onclick="window.scrollTo({top:0,behavior:'smooth'})">처음으로 ↑</button>
+    </div>
+    <div class="closing-div"></div>
+    <div class="closing-source">출처: KCI · PubMed · Frontiers · arXiv · ResearchGate &nbsp;|&nbsp; 조사 기준일 2026.06.03</div>
+  </div>
+</section>
+
+<script>
+/* cursor */
+const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){rx+=(mx-rx)*0.18;ry+=(my-ry)*0.18;
+  dot.style.cssText=`left:${mx}px;top:${my}px`;
+  ring.style.cssText=`left:${rx}px;top:${ry}px`;
+  requestAnimationFrame(loop);})();
+
+/* spotlight */
+window.addEventListener('mousemove',e=>{
+  document.getElementById('spotlight').style.setProperty('--mx',e.clientX+'px');
+  document.getElementById('spotlight').style.setProperty('--my',e.clientY+'px');
+});
+
+/* scroll progress */
+window.addEventListener('scroll',()=>{
+  document.getElementById('progress').style.width=
+    (window.scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';
+});
+
+/* easing */
+function easeOut(t){return 1-(1-t)**4;}
+
+/* counter */
+function animCount(el,to,dur=1600){
+  const start=performance.now();
+  (function f(now){
+    const p=Math.min((now-start)/dur,1);
+    el.textContent=Math.round(easeOut(p)*to).toLocaleString('ko-KR');
+    if(p<1)requestAnimationFrame(f);
+  })(performance.now());
+}
+
+/* reveal observer */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.classList.add('in');
+    // counter
+    e.target.querySelectorAll('.counter').forEach(c=>animCount(c,+c.dataset.to));
+    // stat line
+    if(e.target.classList.contains('stat-card')){
+      setTimeout(()=>{const l=e.target.querySelector('.stat-line');if(l)l.style.width='48px';},300);
+    }
+    obs.unobserve(e.target);
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal,.stat-card').forEach(el=>obs.observe(el));
+
+/* bar observer */
+const bObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.querySelectorAll('.bar-fill').forEach((f,i)=>{
+      setTimeout(()=>{f.style.width=f.dataset.w;},i*120);
+    });
+    // survey big counter
+    const sc=document.querySelector('#survey .survey-number');
+    if(sc)animCount(sc,80,1400);
+    bObs.unobserve(e.target);
+  });
+},{threshold:0.3});
+const sb=document.getElementById('survey-bars');
+if(sb){document.querySelectorAll('.bar-fill').forEach(f=>f.style.width='0');bObs.observe(sb);}
+
+/* 3D tilt */
+document.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    c.style.transform=`perspective(800px) rotateY(${x*6}deg) rotateX(${-y*4}deg) translateY(-4px)`;
+  });
+  c.addEventListener('mouseleave',()=>c.style.transform='');
+});
+
+/* magnetic buttons */
+document.querySelectorAll('.btn-grad,.btn-ghost').forEach(b=>{
+  b.addEventListener('mousemove',e=>{
+    const r=b.getBoundingClientRect();
+    b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*0.2}px,${(e.clientY-r.top-r.height/2)*0.2}px) scale(1.04)`;
+  });
+  b.addEventListener('mouseleave',()=>b.style.transform='');
+});
+
+/* filter tabs */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    document.querySelectorAll('.paper-card').forEach(card=>{
+      if(f==='all'){card.classList.remove('hidden');}
+      else{
+        const cats=card.dataset.cats||'';
+        cats.includes(f)?card.classList.remove('hidden'):card.classList.add('hidden');
+      }
+    });
+  });
+});
+
+/* active nav */
+const sections=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('.nav-links a');
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navAs.forEach(a=>a.style.color='');
+      const a=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if(a)a.style.color='var(--text)';
+    }
+  });
+},{threshold:0.4}).observe(document.querySelectorAll('section[id]')[0]);
+sections.forEach(s=>new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navAs.forEach(a=>a.style.color='');
+      const a=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if(a)a.style.color='var(--text)';
+    }
+  });
+},{threshold:0.4}).observe(s));
+
+/* parallax */
+window.addEventListener('scroll',()=>{
+  const y=document.querySelector('.hero-year');
+  if(y)y.style.transform=`translateY(${scrollY*0.25}px)`;
+});
+</script>
+</body>
+</html>

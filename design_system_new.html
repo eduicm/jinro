@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System — 2026 진로진학상담 트렌드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400;700;900&family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   DESIGN TOKENS  — single source of truth
+═══════════════════════════════════════════════════════ */
+:root {
+  /* ── Color Primitives ── */
+  --primitive-violet-50:  #f5f3ff;
+  --primitive-violet-100: #ede9fe;
+  --primitive-violet-400: #a78bfa;
+  --primitive-violet-500: #8b5cf6;
+  --primitive-violet-600: #7c3aed;
+  --primitive-violet-900: #2e1065;
+
+  --primitive-cyan-400:   #22d3ee;
+  --primitive-cyan-500:   #06b6d4;
+  --primitive-cyan-600:   #0891b2;
+
+  --primitive-pink-400:   #f472b6;
+  --primitive-pink-500:   #ec4899;
+  --primitive-pink-600:   #db2777;
+
+  --primitive-green-400:  #34d399;
+  --primitive-green-500:  #10b981;
+  --primitive-green-600:  #059669;
+
+  --primitive-amber-400:  #fbbf24;
+  --primitive-amber-500:  #f59e0b;
+  --primitive-amber-600:  #d97706;
+
+  --primitive-white:      #f0f0f5;
+  --primitive-gray-100:   rgba(240,240,245,0.7);
+  --primitive-gray-300:   rgba(240,240,245,0.55);
+  --primitive-gray-500:   rgba(240,240,245,0.35);
+  --primitive-gray-700:   rgba(240,240,245,0.14);
+  --primitive-gray-900:   rgba(240,240,245,0.06);
+
+  /* ── Semantic Tokens ── */
+  --color-bg:             #05050a;
+  --color-surface:        rgba(255,255,255,0.03);
+  --color-surface-hover:  rgba(255,255,255,0.06);
+  --color-border:         rgba(255,255,255,0.07);
+  --color-border-hover:   rgba(255,255,255,0.14);
+  --color-text:           #f0f0f5;
+  --color-text-secondary: rgba(240,240,245,0.55);
+  --color-text-tertiary:  rgba(240,240,245,0.28);
+  --color-accent-primary: #8b5cf6;
+  --color-accent-secondary:#06b6d4;
+
+  /* ── Gradient Tokens ── */
+  --gradient-main:  linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+  --gradient-warm:  linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);
+  --gradient-cool:  linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+  --gradient-deep:  linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+  --gradient-text:  linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+
+  /* ── Typography ── */
+  --font-display:   'Black Han Sans', sans-serif;
+  --font-numeric:   'Unbounded', sans-serif;
+  --font-body:      'Noto Sans KR', sans-serif;
+
+  --text-xs:    10px;
+  --text-sm:    12px;
+  --text-base:  14px;
+  --text-md:    16px;
+  --text-lg:    18px;
+  --text-xl:    22px;
+  --text-2xl:   28px;
+  --text-3xl:   36px;
+  --text-4xl:   48px;
+  --text-5xl:   64px;
+  --text-6xl:   80px;
+  --text-hero:  clamp(52px, 9vw, 108px);
+
+  --leading-tight:  1.05;
+  --leading-snug:   1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed:1.85;
+  --leading-loose:  2.0;
+
+  --tracking-tight:  -0.04em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.05em;
+  --tracking-wider:   0.1em;
+  --tracking-widest:  0.15em;
+
+  /* ── Spacing ── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-30: 120px;
+
+  /* ── Border Radius ── */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* ── Shadow ── */
+  --shadow-sm:   0 4px 16px rgba(0,0,0,0.3);
+  --shadow-md:   0 8px 32px rgba(0,0,0,0.4);
+  --shadow-lg:   0 20px 60px rgba(0,0,0,0.5);
+  --shadow-glow-violet: 0 0 40px rgba(139,92,246,0.4);
+  --shadow-glow-cyan:   0 0 40px rgba(6,182,212,0.35);
+  --shadow-glow-pink:   0 0 40px rgba(236,72,153,0.35);
+
+  /* ── Motion ── */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --dur-fast:   150ms;
+  --dur-normal: 300ms;
+  --dur-slow:   600ms;
+  --dur-slower: 800ms;
+
+  /* ── Z-index ── */
+  --z-base:      0;
+  --z-raised:    10;
+  --z-overlay:   100;
+  --z-sticky:    200;
+  --z-modal:     300;
+  --z-cursor:    9999;
+
+  /* ── Layout ── */
+  --container-sm:  640px;
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1120px;
+}
+
+/* ══ BASE ══ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.4); border-radius: 2px; }
+
+/* ══ DS LAYOUT ══ */
+.ds-wrap { display: flex; min-height: 100vh; }
+
+/* ══ SIDEBAR ══ */
+.ds-sidebar {
+  width: 240px; flex-shrink: 0;
+  position: fixed; top: 0; left: 0; bottom: 0;
+  background: rgba(255,255,255,0.02);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto; padding: 32px 0;
+  z-index: var(--z-sticky);
+}
+.ds-sidebar::-webkit-scrollbar { display: none; }
+.sidebar-logo {
+  padding: 0 24px 24px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 20px;
+}
+.sidebar-logo-main {
+  font-family: var(--font-numeric); font-size: 11px; font-weight: 700;
+  background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: 0.08em; display: block; margin-bottom: 4px;
+}
+.sidebar-logo-sub {
+  font-size: 10px; color: var(--color-text-tertiary); letter-spacing: 0.05em;
+}
+.sidebar-section-title {
+  font-family: var(--font-numeric); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--color-text-tertiary); padding: 0 24px 8px;
+  margin-top: 16px;
+}
+.sidebar-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 24px; font-size: 13px; color: var(--color-text-secondary);
+  text-decoration: none; border-left: 2px solid transparent;
+  transition: all var(--dur-fast);
+  cursor: pointer;
+}
+.sidebar-link:hover { color: var(--color-text); background: rgba(255,255,255,0.03); }
+.sidebar-link.active {
+  color: var(--color-accent-primary);
+  border-left-color: var(--color-accent-primary);
+  background: rgba(139,92,246,0.05);
+}
+.sidebar-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+/* ══ MAIN ══ */
+.ds-main {
+  margin-left: 240px; flex: 1;
+  padding: 60px 64px;
+  max-width: calc(100vw - 240px);
+}
+
+/* ══ PAGE HEADER ══ */
+.ds-page-header { margin-bottom: 80px; }
+.ds-page-eyebrow {
+  font-family: var(--font-numeric); font-size: 10px; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--color-accent-primary); margin-bottom: 16px; display: block;
+}
+.ds-page-title {
+  font-family: var(--font-display);
+  font-size: 56px; font-weight: 400; letter-spacing: -1px;
+  line-height: 1.05; margin-bottom: 16px;
+}
+.ds-page-desc { font-size: 15px; color: var(--color-text-secondary); line-height: 1.8; max-width: 560px; font-weight: 300; }
+.ds-version {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-numeric); font-size: 10px;
+  padding: 5px 12px; border-radius: var(--radius-full);
+  background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.2);
+  color: var(--color-accent-primary); margin-top: 20px;
+}
+.ds-version-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent-primary); animation: vdot 2s infinite; }
+@keyframes vdot { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+/* ══ SECTION ══ */
+.ds-section { margin-bottom: 100px; scroll-margin-top: 40px; }
+.ds-section-header { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); }
+.ds-section-num {
+  font-family: var(--font-numeric); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--color-text-tertiary); margin-bottom: 8px; display: block;
+}
+.ds-section-title {
+  font-family: var(--font-display); font-size: 28px; font-weight: 400;
+  letter-spacing: -0.5px;
+}
+.ds-section-desc { font-size: 13px; color: var(--color-text-secondary); margin-top: 8px; font-weight: 300; line-height: 1.7; }
+
+/* ══ GRID HELPERS ══ */
+.ds-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ds-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.ds-grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+.ds-grid-5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+
+/* ══ TOKEN CARD ══ */
+.token-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  transition: border-color var(--dur-normal);
+}
+.token-card:hover { border-color: var(--color-border-hover); }
+.token-label {
+  font-family: var(--font-numeric); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--color-text-tertiary); margin-bottom: 8px;
+}
+.token-value {
+  font-family: var(--font-numeric); font-size: 11px;
+  color: var(--color-text-secondary); margin-top: 6px;
+}
+.token-desc { font-size: 11px; color: var(--color-text-tertiary); margin-top: 4px; font-weight: 300; }
+
+/* ══ COLOR SWATCHES ══ */
+.color-swatch {
+  border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+.swatch-block { height: 80px; width: 100%; }
+.swatch-info { padding: 12px 16px; background: rgba(255,255,255,0.02); }
+.swatch-name { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+.swatch-hex { font-family: var(--font-numeric); font-size: 10px; color: var(--color-text-secondary); }
+.swatch-usage { font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; font-weight: 300; }
+
+/* Gradient swatches */
+.grad-swatch {
+  border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+.grad-block { height: 80px; }
+.grad-info { padding: 12px 16px; background: rgba(255,255,255,0.02); }
+.grad-name { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+.grad-val { font-family: var(--font-numeric); font-size: 9px; color: var(--color-text-tertiary); line-height: 1.5; }
+
+/* ══ TYPOGRAPHY SPECIMENS ══ */
+.type-specimen {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  background: var(--color-surface);
+  margin-bottom: 12px;
+  display: flex; align-items: baseline; gap: 24px;
+}
+.type-meta {
+  min-width: 160px; flex-shrink: 0;
+}
+.type-meta-label { font-family: var(--font-numeric); font-size: 9px; color: var(--color-text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.type-meta-size { font-family: var(--font-numeric); font-size: 10px; color: var(--color-text-secondary); }
+.type-preview { flex: 1; }
+
+/* ══ SPACING SCALE ══ */
+.space-row {
+  display: flex; align-items: center; gap: 20px;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.space-bar-wrap { flex: 1; }
+.space-bar { height: 6px; border-radius: 3px; background: var(--gradient-main); }
+.space-label { font-family: var(--font-numeric); font-size: 10px; color: var(--color-text-tertiary); min-width: 60px; }
+.space-value { font-family: var(--font-numeric); font-size: 10px; color: var(--color-text-secondary); min-width: 40px; }
+
+/* ══ RADIUS SHOWCASE ══ */
+.radius-box-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.radius-box {
+  width: 64px; height: 64px;
+  background: rgba(139,92,246,0.15);
+  border: 1px solid rgba(139,92,246,0.3);
+}
+.radius-box-label { font-family: var(--font-numeric); font-size: 9px; color: var(--color-text-secondary); text-align: center; letter-spacing: 0.05em; }
+.radius-box-val { font-family: var(--font-numeric); font-size: 9px; color: var(--color-text-tertiary); text-align: center; }
+
+/* ══ MOTION DEMO ══ */
+.motion-row {
+  display: flex; align-items: center; gap: 20px;
+  padding: 16px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 10px;
+}
+.motion-label { font-family: var(--font-numeric); font-size: 10px; color: var(--color-text-secondary); min-width: 140px; letter-spacing: 0.05em; }
+.motion-val { font-size: 11px; color: var(--color-text-tertiary); font-weight: 300; flex: 1; font-family: var(--font-numeric); }
+.motion-ball {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gradient-main);
+  cursor: pointer;
+  transition: transform var(--dur-normal) var(--ease-spring);
+}
+.motion-ball:hover { transform: scale(1.5) translateX(8px); }
+.motion-ball.ease-out-demo { transition-timing-function: var(--ease-out); }
+.motion-ball.ease-in-out-demo { transition-timing-function: var(--ease-in-out); }
+
+/* ══ COMPONENT DEMOS ══ */
+
+/* Buttons */
+.btn-demo-wrap { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 32px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); }
+.ds-btn {
+  padding: 11px 24px; border-radius: var(--radius-full);
+  font-size: 13px; font-family: var(--font-body); font-weight: 500;
+  cursor: pointer; border: none; transition: all var(--dur-normal) var(--ease-spring);
+  letter-spacing: 0.01em;
+}
+.ds-btn-primary { background: var(--gradient-main); color: #fff; box-shadow: var(--shadow-glow-violet); }
+.ds-btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(139,92,246,0.5); }
+.ds-btn-ghost { background: rgba(255,255,255,0.05); border: 1px solid var(--color-border-hover); color: var(--color-text-secondary); }
+.ds-btn-ghost:hover { background: rgba(255,255,255,0.09); color: var(--color-text); }
+.ds-btn-outline { background: transparent; border: 1px solid var(--color-accent-primary); color: var(--color-accent-primary); }
+.ds-btn-outline:hover { background: rgba(139,92,246,0.1); }
+.ds-btn-warm { background: var(--gradient-warm); color: #fff; box-shadow: var(--shadow-glow-pink); }
+.ds-btn-warm:hover { transform: scale(1.05); }
+.ds-btn-sm { padding: 7px 16px; font-size: 11px; }
+.ds-btn-lg { padding: 15px 32px; font-size: 15px; }
+.ds-btn-icon { padding: 10px; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+
+/* Cards */
+.ds-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: 32px;
+  transition: all var(--dur-normal) var(--ease-spring);
+  position: relative; overflow: hidden;
+}
+.ds-card:hover { background: var(--color-surface-hover); border-color: var(--color-border-hover); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+/* Gradient border card */
+.ds-card-grad-border {
+  background: var(--color-surface);
+  border: 1px solid transparent;
+  border-radius: var(--radius-2xl);
+  padding: 32px;
+  background-clip: padding-box;
+  position: relative;
+  transition: all var(--dur-normal);
+}
+.ds-card-grad-border::before {
+  content: '';
+  position: absolute; inset: -1px; border-radius: var(--radius-2xl);
+  background: var(--gradient-main);
+  z-index: -1;
+  opacity: 0.4; transition: opacity var(--dur-normal);
+}
+.ds-card-grad-border:hover::before { opacity: 1; }
+
+/* Glow card */
+.ds-card-glow {
+  background: rgba(139,92,246,0.06);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: var(--radius-2xl); padding: 32px;
+  box-shadow: 0 0 40px rgba(139,92,246,0.1);
+  transition: all var(--dur-normal);
+}
+.ds-card-glow:hover { box-shadow: var(--shadow-glow-violet); border-color: rgba(139,92,246,0.4); }
+
+/* Tags */
+.ds-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: var(--radius-full);
+  font-family: var(--font-numeric); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.ds-tag-violet { background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.25); color: var(--primitive-violet-400); }
+.ds-tag-cyan   { background: rgba(6,182,212,0.12);  border: 1px solid rgba(6,182,212,0.25);  color: var(--primitive-cyan-400); }
+.ds-tag-pink   { background: rgba(236,72,153,0.12); border: 1px solid rgba(236,72,153,0.25); color: var(--primitive-pink-400); }
+.ds-tag-green  { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); color: var(--primitive-green-400); }
+.ds-tag-amber  { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.25); color: var(--primitive-amber-400); }
+.tag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+/* Progress Bar */
+.ds-progress-wrap { background: rgba(255,255,255,0.06); border-radius: 3px; height: 4px; overflow: hidden; }
+.ds-progress-fill { height: 100%; border-radius: 3px; transition: width 1s var(--ease-out); }
+
+/* Stat display */
+.ds-stat-num {
+  font-family: var(--font-numeric); font-size: 56px; font-weight: 200;
+  line-height: 1; letter-spacing: -2px;
+}
+.ds-stat-unit { font-size: 0.45em; font-weight: 400; background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* Badges */
+.ds-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 3px 10px; border-radius: var(--radius-full);
+  font-family: var(--font-numeric); font-size: 10px; font-weight: 700;
+}
+.ds-badge-outline { border: 1px solid var(--color-border-hover); color: var(--color-text-secondary); }
+.ds-badge-solid-v { background: rgba(139,92,246,0.2); color: var(--primitive-violet-400); }
+.ds-badge-solid-c { background: rgba(6,182,212,0.2); color: var(--primitive-cyan-400); }
+
+/* Nav pill */
+.ds-nav-pill {
+  font-family: var(--font-numeric); font-size: 10px; font-weight: 700;
+  padding: 6px 14px; border-radius: var(--radius-full);
+  background: rgba(139,92,246,0.15);
+  border: 1px solid rgba(139,92,246,0.3);
+  color: var(--primitive-violet-400);
+  letter-spacing: 0.05em;
+}
+
+/* Divider */
+.ds-divider { height: 1px; background: var(--color-border); margin: 32px 0; }
+.ds-divider-grad { height: 1px; background: var(--gradient-main); opacity: 0.3; margin: 32px 0; }
+
+/* Code block */
+.ds-code {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px; color: var(--color-text-secondary);
+  line-height: 1.7; overflow-x: auto;
+}
+.code-k { color: var(--primitive-violet-400); }
+.code-v { color: var(--primitive-cyan-400); }
+.code-s { color: var(--primitive-green-400); }
+.code-c { color: rgba(240,240,245,0.3); }
+
+/* Effect demos */
+.effect-box {
+  border-radius: var(--radius-xl); padding: 28px 24px; text-align: center; height: 140px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+}
+.effect-glass {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.effect-grain { position: relative; background: rgba(255,255,255,0.03); border: 1px solid var(--color-border); overflow: hidden; }
+.effect-grain::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.08; background-size: 128px;
+}
+.effect-glow-border { background: rgba(139,92,246,0.05); border: 1px solid rgba(139,92,246,0.3); box-shadow: 0 0 20px rgba(139,92,246,0.15); }
+.effect-inset { background: var(--color-surface); border: 1px solid var(--color-border); box-shadow: inset 0 2px 8px rgba(0,0,0,0.4); }
+.effect-label { font-family: var(--font-numeric); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-secondary); }
+
+/* Cursor preview */
+.cursor-preview {
+  position: relative; height: 120px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  display: flex; align-items: center; justify-content: center; gap: 32px;
+  overflow: hidden;
+}
+.cursor-dot-demo { width: 8px; height: 8px; border-radius: 50%; background: var(--primitive-violet-500); }
+.cursor-ring-demo { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(139,92,246,0.4); }
+.cursor-trail { display: flex; gap: 6px; align-items: center; }
+.cursor-trail-dot { border-radius: 50%; background: var(--primitive-violet-500); opacity: 0; animation: trailFade 1.8s ease-in-out infinite; }
+@keyframes trailFade { 0%,100%{opacity:0} 50%{opacity:var(--op,0.4)} }
+
+/* Spotlight demo */
+.spotlight-demo {
+  position: relative; height: 120px; overflow: hidden;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.spotlight-glow {
+  position: absolute; width: 200px; height: 200px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  animation: spotMove 4s ease-in-out infinite alternate;
+}
+@keyframes spotMove { from { left: 30%; } to { left: 70%; } }
+
+/* Aurora demo */
+.aurora-demo {
+  position: relative; height: 120px; overflow: hidden;
+  background: rgba(5,5,10,0.8);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+}
+.aurora-blob { position: absolute; border-radius: 50%; filter: blur(30px); }
+
+/* Scroll indicator */
+.scroll-indicator {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  font-family: var(--font-numeric); font-size: 9px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--color-text-tertiary);
+}
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--primitive-violet-500), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* Z-index scale */
+.z-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.z-badge { font-family: var(--font-numeric); font-size: 10px; min-width: 48px; text-align: right; color: var(--color-accent-primary); }
+.z-bar { height: 3px; border-radius: 2px; background: var(--gradient-main); }
+.z-label { font-family: var(--font-numeric); font-size: 10px; color: var(--color-text-secondary); min-width: 100px; }
+.z-desc { font-size: 11px; color: var(--color-text-tertiary); font-weight: 300; }
+
+/* Component card wrapper */
+.comp-demo-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: 36px; margin-bottom: 16px;
+}
+.comp-demo-label {
+  font-family: var(--font-numeric); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--color-text-tertiary); margin-bottom: 20px; display: block;
+}
+
+/* Responsive */
+@media(max-width:900px) {
+  .ds-sidebar { display: none; }
+  .ds-main { margin-left: 0; padding: 40px 24px; max-width: 100vw; }
+  .ds-grid-3, .ds-grid-4, .ds-grid-5 { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:560px) {
+  .ds-grid-2, .ds-grid-3, .ds-grid-4, .ds-grid-5 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="ds-wrap">
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<nav class="ds-sidebar">
+  <div class="sidebar-logo">
+    <span class="sidebar-logo-main">DESIGN SYSTEM</span>
+    <span class="sidebar-logo-sub">2026 진로진학상담 트렌드 · v1.0</span>
+  </div>
+
+  <div class="sidebar-section-title">Foundation</div>
+  <a class="sidebar-link active" onclick="scrollTo('colors')"><span class="sidebar-dot" style="background:#8b5cf6"></span>Colors</a>
+  <a class="sidebar-link" onclick="scrollTo('gradients')"><span class="sidebar-dot" style="background:linear-gradient(90deg,#8b5cf6,#06b6d4);border-radius:50%"></span>Gradients</a>
+  <a class="sidebar-link" onclick="scrollTo('typography')"><span class="sidebar-dot" style="background:#06b6d4"></span>Typography</a>
+  <a class="sidebar-link" onclick="scrollTo('spacing')"><span class="sidebar-dot" style="background:#10b981"></span>Spacing</a>
+  <a class="sidebar-link" onclick="scrollTo('radius')"><span class="sidebar-dot" style="background:#f59e0b"></span>Border Radius</a>
+  <a class="sidebar-link" onclick="scrollTo('shadow')"><span class="sidebar-dot" style="background:#ec4899"></span>Shadows</a>
+  <a class="sidebar-link" onclick="scrollTo('motion')"><span class="sidebar-dot" style="background:#a78bfa"></span>Motion</a>
+  <a class="sidebar-link" onclick="scrollTo('zindex')"><span class="sidebar-dot" style="background:#22d3ee"></span>Z-Index</a>
+
+  <div class="sidebar-section-title">Components</div>
+  <a class="sidebar-link" onclick="scrollTo('buttons')"><span class="sidebar-dot" style="background:#8b5cf6"></span>Buttons</a>
+  <a class="sidebar-link" onclick="scrollTo('cards')"><span class="sidebar-dot" style="background:#06b6d4"></span>Cards</a>
+  <a class="sidebar-link" onclick="scrollTo('tags')"><span class="sidebar-dot" style="background:#10b981"></span>Tags & Badges</a>
+  <a class="sidebar-link" onclick="scrollTo('data')"><span class="sidebar-dot" style="background:#f59e0b"></span>Data Display</a>
+  <a class="sidebar-link" onclick="scrollTo('nav-comp')"><span class="sidebar-dot" style="background:#ec4899"></span>Navigation</a>
+
+  <div class="sidebar-section-title">Effects</div>
+  <a class="sidebar-link" onclick="scrollTo('effects')"><span class="sidebar-dot" style="background:#8b5cf6"></span>Surface Effects</a>
+  <a class="sidebar-link" onclick="scrollTo('cursor')"><span class="sidebar-dot" style="background:#06b6d4"></span>Cursor System</a>
+  <a class="sidebar-link" onclick="scrollTo('aurora')"><span class="sidebar-dot" style="background:#ec4899"></span>Aurora & Blobs</a>
+
+  <div class="sidebar-section-title">Tokens</div>
+  <a class="sidebar-link" onclick="scrollTo('tokens-code')"><span class="sidebar-dot" style="background:#a78bfa"></span>CSS Variables</a>
+</nav>
+
+<!-- ══════════ MAIN ══════════ -->
+<main class="ds-main">
+
+  <!-- Header -->
+  <header class="ds-page-header">
+    <span class="ds-page-eyebrow">Design System · Documentation</span>
+    <h1 class="ds-page-title">2026 진로진학<br>상담 트렌드</h1>
+    <p class="ds-page-desc">이 디자인 시스템은 2026 진로진학상담 트렌드 웹사이트에서 추출된 디자인 토큰, 컴포넌트, 이펙트의 공식 레퍼런스입니다.</p>
+    <div class="ds-version"><span class="ds-version-dot"></span>v1.0.0 &nbsp;·&nbsp; Dark Aurora Theme</div>
+  </header>
+
+  <!-- ─────────────────────── 1. COLORS ─────────────────────── -->
+  <section id="colors" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">01 / Foundation</span>
+      <h2 class="ds-section-title">Colors</h2>
+      <p class="ds-section-desc">시맨틱 색상 토큰과 프리미티브 팔레트. 모든 색상은 다크 배경 기반입니다.</p>
+    </div>
+
+    <div class="comp-demo-label">Semantic Tokens</div>
+    <div class="ds-grid-3" style="margin-bottom:20px">
+      <div class="color-swatch"><div class="swatch-block" style="background:#05050a;border-bottom:1px solid rgba(255,255,255,0.06)"></div><div class="swatch-info"><div class="swatch-name">--color-bg</div><div class="swatch-hex">#05050a</div><div class="swatch-usage">페이지 배경</div></div></div>
+      <div class="color-swatch"><div class="swatch-block" style="background:rgba(255,255,255,0.03)"></div><div class="swatch-info"><div class="swatch-name">--color-surface</div><div class="swatch-hex">rgba(255,255,255,0.03)</div><div class="swatch-usage">카드 기본 배경</div></div></div>
+      <div class="color-swatch"><div class="swatch-block" style="background:rgba(255,255,255,0.06)"></div><div class="swatch-info"><div class="swatch-name">--color-surface-hover</div><div class="swatch-hex">rgba(255,255,255,0.06)</div><div class="swatch-usage">카드 호버 배경</div></div></div>
+      <div class="color-swatch"><div class="swatch-block" style="background:rgba(255,255,255,0.07)"></div><div class="swatch-info"><div class="swatch-name">--color-border</div><div class="swatch-hex">rgba(255,255,255,0.07)</div><div class="swatch-usage">기본 테두리</div></div></div>
+      <div class="color-swatch"><div class="swatch-block" style="background:rgba(255,255,255,0.14)"></div><div class="swatch-info"><div class="swatch-name">--color-border-hover</div><div class="swatch-hex">rgba(255,255,255,0.14)</div><div class="swatch-usage">호버 테두리</div></div></div>
+      <div class="color-swatch"><div class="swatch-block" style="background:#f0f0f5"></div><div class="swatch-info"><div class="swatch-name">--color-text</div><div class="swatch-hex">#f0f0f5</div><div class="swatch-usage">기본 텍스트</div></div></div>
+    </div>
+
+    <div class="comp-demo-label">Accent Palette</div>
+    <div class="ds-grid-5">
+      <div class="color-swatch"><div class="swatch-block" style="background:#8b5cf6"></div><div class="swatch-info"><div class="swatch-name">Violet 500</div><div class="swatch-hex">#8b5cf6</div><div class="swatch-usage">Primary accent</div></div></div>
+      <div class="color-swatch"><div class="swatch-block" style="background:#06b6d4"></div><div class="swatch-info"><div class="swatch-name">Cyan 500</div><div class="swatch-hex">#06b6d4</div><div class="swatch-usage">Secondary accent</div></div></div>
+      <div class="color-swatch"><div class="swatch-block" style="background:#ec4899"></div><div class="swatch-info"><div class="swatch-name">Pink 500</div><div class="swatch-hex">#ec4899</div><div class="swatch-usage">Warm accent</div></div></div>
+      <div class="color-swatch"><div class="swatch-block" style="background:#10b981"></div><div class="swatch-info"><div class="swatch-name">Green 500</div><div class="swatch-hex">#10b981</div><div class="swatch-usage">Success / Cool</div></div></div>
+      <div class="color-swatch"><div class="swatch-block" style="background:#f59e0b"></div><div class="swatch-info"><div class="swatch-name">Amber 500</div><div class="swatch-hex">#f59e0b</div><div class="swatch-usage">Warning / Highlight</div></div></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 2. GRADIENTS ─────────────────────── -->
+  <section id="gradients" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">02 / Foundation</span>
+      <h2 class="ds-section-title">Gradients</h2>
+      <p class="ds-section-desc">4종의 그라디언트 토큰. 배경, 텍스트, 보더, 버튼에 사용됩니다.</p>
+    </div>
+    <div class="ds-grid-4">
+      <div class="grad-swatch"><div class="grad-block" style="background:linear-gradient(135deg,#8b5cf6,#06b6d4)"></div><div class="grad-info"><div class="grad-name">--gradient-main</div><div class="grad-val">#8b5cf6 → #06b6d4<br>Violet to Cyan · 135°</div></div></div>
+      <div class="grad-swatch"><div class="grad-block" style="background:linear-gradient(135deg,#ec4899,#f59e0b)"></div><div class="grad-info"><div class="grad-name">--gradient-warm</div><div class="grad-val">#ec4899 → #f59e0b<br>Pink to Amber · 135°</div></div></div>
+      <div class="grad-swatch"><div class="grad-block" style="background:linear-gradient(135deg,#06b6d4,#10b981)"></div><div class="grad-info"><div class="grad-name">--gradient-cool</div><div class="grad-val">#06b6d4 → #10b981<br>Cyan to Green · 135°</div></div></div>
+      <div class="grad-swatch"><div class="grad-block" style="background:linear-gradient(135deg,#7c3aed,#ec4899)"></div><div class="grad-info"><div class="grad-name">--gradient-deep</div><div class="grad-val">#7c3aed → #ec4899<br>Deep Violet to Pink · 135°</div></div></div>
+    </div>
+    <div class="ds-divider"></div>
+    <div class="comp-demo-label">Gradient Text Usage</div>
+    <div class="comp-demo-section">
+      <div style="font-family:var(--font-display);font-size:48px;background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:12px">그라디언트 텍스트</div>
+      <div style="font-family:var(--font-numeric);font-size:36px;font-weight:900;background:var(--gradient-warm);-webkit-background-clip:text;-webkit-text-fill-color:transparent">192 학점</div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 3. TYPOGRAPHY ─────────────────────── -->
+  <section id="typography" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">03 / Foundation</span>
+      <h2 class="ds-section-title">Typography</h2>
+      <p class="ds-section-desc">3종의 서체 패밀리와 타입 스케일. 역할별로 엄격히 분리됩니다.</p>
+    </div>
+
+    <div class="comp-demo-label" style="margin-bottom:16px">Font Families</div>
+    <div class="ds-grid-3" style="margin-bottom:32px">
+      <div class="token-card">
+        <div class="token-label">Display · Korean Headers</div>
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:32px;margin:12px 0;line-height:1.1">진로 설계</div>
+        <div class="token-value">Black Han Sans</div>
+        <div class="token-desc">한국어 디스플레이 헤딩. 굵고 임팩트 있는 제목.</div>
+      </div>
+      <div class="token-card">
+        <div class="token-label">Numeric · EN Labels & Numbers</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:28px;font-weight:900;margin:12px 0;letter-spacing:-2px;line-height:1.1">2026</div>
+        <div class="token-value">Unbounded</div>
+        <div class="token-desc">숫자, 영문 라벨, 태그, 네비게이션.</div>
+      </div>
+      <div class="token-card">
+        <div class="token-label">Body · Korean Body Text</div>
+        <div style="font-family:'Noto Sans KR',sans-serif;font-size:15px;margin:12px 0;line-height:1.8;color:rgba(240,240,245,0.7)">진로진학상담교사는 학생 삶의 설계 동반자입니다.</div>
+        <div class="token-value">Noto Sans KR</div>
+        <div class="token-desc">본문, 설명, UI 레이블.</div>
+      </div>
+    </div>
+
+    <div class="comp-demo-label" style="margin-bottom:16px">Type Scale</div>
+    <div class="type-specimen"><div class="type-meta"><span class="type-meta-label">text-hero</span><span class="type-meta-size">clamp(52–108px)</span></div><div class="type-preview" style="font-family:var(--font-display);font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-1px">트렌드</div></div>
+    <div class="type-specimen"><div class="type-meta"><span class="type-meta-label">text-6xl</span><span class="type-meta-size">80px · display</span></div><div class="type-preview" style="font-family:var(--font-numeric);font-size:48px;font-weight:900;letter-spacing:-3px;line-height:1">192</div></div>
+    <div class="type-specimen"><div class="type-meta"><span class="type-meta-label">text-4xl</span><span class="type-meta-size">48px · section title</span></div><div class="type-preview" style="font-family:var(--font-display);font-size:36px;line-height:1.1">핵심 변화</div></div>
+    <div class="type-specimen"><div class="type-meta"><span class="type-meta-label">text-2xl</span><span class="type-meta-size">28px · card title</span></div><div class="type-preview" style="font-family:var(--font-display);font-size:24px">AI 문해력</div></div>
+    <div class="type-specimen"><div class="type-meta"><span class="type-meta-label">text-md</span><span class="type-meta-size">16px · body</span></div><div class="type-preview" style="font-size:16px;font-weight:300;color:rgba(240,240,245,0.7);line-height:1.85">고교학점제 전면 시행으로 진로진학상담교사의 역할이 근본적으로 변화합니다.</div></div>
+    <div class="type-specimen"><div class="type-meta"><span class="type-meta-label">text-xs</span><span class="type-meta-size">10px · label/tag</span></div><div class="type-preview" style="font-family:var(--font-numeric);font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent-primary)">Core Changes</div></div>
+  </section>
+
+  <!-- ─────────────────────── 4. SPACING ─────────────────────── -->
+  <section id="spacing" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">04 / Foundation</span>
+      <h2 class="ds-section-title">Spacing Scale</h2>
+      <p class="ds-section-desc">4px 기반 8단계 스페이싱 시스템.</p>
+    </div>
+    <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:28px">
+      <div class="space-row"><span class="space-label">--space-1</span><div class="space-bar-wrap"><div class="space-bar" style="width:4px"></div></div><span class="space-value">4px</span></div>
+      <div class="space-row"><span class="space-label">--space-2</span><div class="space-bar-wrap"><div class="space-bar" style="width:8px"></div></div><span class="space-value">8px</span></div>
+      <div class="space-row"><span class="space-label">--space-4</span><div class="space-bar-wrap"><div class="space-bar" style="width:16px"></div></div><span class="space-value">16px</span></div>
+      <div class="space-row"><span class="space-label">--space-6</span><div class="space-bar-wrap"><div class="space-bar" style="width:24px"></div></div><span class="space-value">24px</span></div>
+      <div class="space-row"><span class="space-label">--space-8</span><div class="space-bar-wrap"><div class="space-bar" style="width:32px"></div></div><span class="space-value">32px</span></div>
+      <div class="space-row"><span class="space-label">--space-10</span><div class="space-bar-wrap"><div class="space-bar" style="width:40px"></div></div><span class="space-value">40px</span></div>
+      <div class="space-row"><span class="space-label">--space-16</span><div class="space-bar-wrap"><div class="space-bar" style="width:64px"></div></div><span class="space-value">64px</span></div>
+      <div class="space-row"><span class="space-label">--space-30</span><div class="space-bar-wrap"><div class="space-bar" style="width:120px"></div></div><span class="space-value">120px</span></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 5. RADIUS ─────────────────────── -->
+  <section id="radius" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">05 / Foundation</span>
+      <h2 class="ds-section-title">Border Radius</h2>
+    </div>
+    <div class="ds-grid-5">
+      <div class="radius-box-wrap"><div class="radius-box" style="border-radius:8px"></div><div class="radius-box-label">--radius-sm</div><div class="radius-box-val">8px</div></div>
+      <div class="radius-box-wrap"><div class="radius-box" style="border-radius:12px"></div><div class="radius-box-label">--radius-md</div><div class="radius-box-val">12px</div></div>
+      <div class="radius-box-wrap"><div class="radius-box" style="border-radius:16px"></div><div class="radius-box-label">--radius-lg</div><div class="radius-box-val">16px</div></div>
+      <div class="radius-box-wrap"><div class="radius-box" style="border-radius:20px"></div><div class="radius-box-label">--radius-xl</div><div class="radius-box-val">20px</div></div>
+      <div class="radius-box-wrap"><div class="radius-box" style="border-radius:9999px;width:64px;height:32px"></div><div class="radius-box-label">--radius-full</div><div class="radius-box-val">9999px</div></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 6. SHADOW ─────────────────────── -->
+  <section id="shadow" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">06 / Foundation</span>
+      <h2 class="ds-section-title">Shadows & Glows</h2>
+    </div>
+    <div class="ds-grid-3">
+      <div class="token-card" style="box-shadow:0 4px 16px rgba(0,0,0,0.3)"><div class="token-label">shadow-sm</div><div class="token-value">0 4px 16px rgba(0,0,0,0.3)</div><div class="token-desc">작은 카드 기본 그림자</div></div>
+      <div class="token-card" style="box-shadow:0 8px 32px rgba(0,0,0,0.4)"><div class="token-label">shadow-md</div><div class="token-value">0 8px 32px rgba(0,0,0,0.4)</div><div class="token-desc">모달, 드롭다운</div></div>
+      <div class="token-card" style="box-shadow:0 20px 60px rgba(0,0,0,0.5)"><div class="token-label">shadow-lg</div><div class="token-value">0 20px 60px rgba(0,0,0,0.5)</div><div class="token-desc">카드 호버 상태</div></div>
+      <div class="token-card" style="box-shadow:0 0 40px rgba(139,92,246,0.4)"><div class="token-label">glow-violet</div><div class="token-value">0 0 40px rgba(139,92,246,0.4)</div><div class="token-desc">Primary 버튼, 강조 요소</div></div>
+      <div class="token-card" style="box-shadow:0 0 40px rgba(6,182,212,0.35)"><div class="token-label">glow-cyan</div><div class="token-value">0 0 40px rgba(6,182,212,0.35)</div><div class="token-desc">Secondary 강조</div></div>
+      <div class="token-card" style="box-shadow:0 0 40px rgba(236,72,153,0.35)"><div class="token-label">glow-pink</div><div class="token-value">0 0 40px rgba(236,72,153,0.35)</div><div class="token-desc">Warm accent 강조</div></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 7. MOTION ─────────────────────── -->
+  <section id="motion" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">07 / Foundation</span>
+      <h2 class="ds-section-title">Motion</h2>
+      <p class="ds-section-desc">이징 함수와 지속 시간 토큰. 박스 위에 호버하여 데모를 확인하세요.</p>
+    </div>
+    <div class="comp-demo-label" style="margin-bottom:16px">Easing Functions</div>
+    <div class="motion-row"><span class="motion-label">--ease-spring</span><span class="motion-val">cubic-bezier(0.34, 1.56, 0.64, 1) — 스프링 오버슈트</span><div class="motion-ball"></div></div>
+    <div class="motion-row"><span class="motion-label">--ease-out</span><span class="motion-val">cubic-bezier(0.16, 1, 0.3, 1) — 빠른 진입·느린 종료</span><div class="motion-ball ease-out-demo"></div></div>
+    <div class="motion-row"><span class="motion-label">--ease-in-out</span><span class="motion-val">cubic-bezier(0.65, 0, 0.35, 1) — 양쪽 완만</span><div class="motion-ball ease-in-out-demo"></div></div>
+    <div class="ds-divider"></div>
+    <div class="comp-demo-label" style="margin-bottom:16px">Duration Tokens</div>
+    <div class="ds-grid-4">
+      <div class="token-card"><div class="token-label">dur-fast</div><div class="token-value">150ms</div><div class="token-desc">마이크로 인터랙션, 색상 전환</div></div>
+      <div class="token-card"><div class="token-label">dur-normal</div><div class="token-value">300ms</div><div class="token-desc">카드 호버, 버튼, 테두리</div></div>
+      <div class="token-card"><div class="token-label">dur-slow</div><div class="token-value">600ms</div><div class="token-desc">프로그레스 바, 리빌</div></div>
+      <div class="token-card"><div class="token-label">dur-slower</div><div class="token-value">800ms</div><div class="token-desc">카운터 애니메이션, 페이지 진입</div></div>
+    </div>
+    <div class="ds-divider"></div>
+    <div class="comp-demo-label" style="margin-bottom:16px">Named Animations</div>
+    <div class="ds-grid-3">
+      <div class="token-card"><div class="token-label">fadeUp</div><div class="token-value">opacity 0→1, translateY 32→0</div><div class="token-desc">섹션 진입, 히어로 텍스트</div></div>
+      <div class="token-card"><div class="token-label">blobFloat</div><div class="token-value">translate + scale, 18–25s infinite</div><div class="token-desc">Aurora 배경 블롭 이동</div></div>
+      <div class="token-card"><div class="token-label">scrollPulse</div><div class="token-value">opacity 0.4↔1, 2s ease-in-out</div><div class="token-desc">스크롤 인디케이터 라인</div></div>
+      <div class="token-card"><div class="token-label">vdot</div><div class="token-value">opacity 1↔0.3, 2s infinite</div><div class="token-desc">활성 상태 점 깜빡임</div></div>
+      <div class="token-card"><div class="token-label">pulse</div><div class="token-value">opacity + scale, 2s infinite</div><div class="token-desc">라벨 점, 상태 표시</div></div>
+      <div class="token-card"><div class="token-label">trackPulse</div><div class="token-value">scaleY + opacity, 2s infinite</div><div class="token-desc">스크롤 트랙 라인</div></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 8. Z-INDEX ─────────────────────── -->
+  <section id="zindex" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">08 / Foundation</span>
+      <h2 class="ds-section-title">Z-Index Scale</h2>
+    </div>
+    <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:28px">
+      <div class="z-row"><span class="z-badge">9999</span><div class="z-bar" style="width:240px"></div><span class="z-label">--z-cursor</span><span class="z-desc">커스텀 커서 오버레이</span></div>
+      <div class="z-row"><span class="z-badge">300</span><div class="z-bar" style="width:180px"></div><span class="z-label">--z-modal</span><span class="z-desc">모달, 드로어</span></div>
+      <div class="z-row"><span class="z-badge">200</span><div class="z-bar" style="width:150px"></div><span class="z-label">--z-sticky</span><span class="z-desc">고정 네비게이션, 사이드바</span></div>
+      <div class="z-row"><span class="z-badge">100</span><div class="z-bar" style="width:100px"></div><span class="z-label">--z-overlay</span><span class="z-desc">스포트라이트, 그레인, 그리드</span></div>
+      <div class="z-row"><span class="z-badge">10</span><div class="z-bar" style="width:60px"></div><span class="z-label">--z-raised</span><span class="z-desc">툴팁, 드롭다운</span></div>
+      <div class="z-row"><span class="z-badge">0</span><div class="z-bar" style="width:20px"></div><span class="z-label">--z-base</span><span class="z-desc">일반 콘텐츠 (Aurora, Grid 배경)</span></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 9. BUTTONS ─────────────────────── -->
+  <section id="buttons" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">09 / Components</span>
+      <h2 class="ds-section-title">Buttons</h2>
+    </div>
+    <div class="comp-demo-section">
+      <span class="comp-demo-label">Variants</span>
+      <div class="btn-demo-wrap">
+        <button class="ds-btn ds-btn-primary">Primary</button>
+        <button class="ds-btn ds-btn-ghost">Ghost</button>
+        <button class="ds-btn ds-btn-outline">Outline</button>
+        <button class="ds-btn ds-btn-warm">Warm</button>
+      </div>
+    </div>
+    <div class="comp-demo-section">
+      <span class="comp-demo-label">Sizes</span>
+      <div class="btn-demo-wrap">
+        <button class="ds-btn ds-btn-primary ds-btn-sm">Small</button>
+        <button class="ds-btn ds-btn-primary">Default</button>
+        <button class="ds-btn ds-btn-primary ds-btn-lg">Large</button>
+        <button class="ds-btn ds-btn-ghost ds-btn-icon">⚡</button>
+      </div>
+    </div>
+    <div class="comp-demo-section">
+      <span class="comp-demo-label">With Label</span>
+      <div class="btn-demo-wrap">
+        <button class="ds-btn ds-btn-primary">트렌드 살펴보기</button>
+        <button class="ds-btn ds-btn-ghost">핵심 수치 →</button>
+        <button class="ds-btn ds-btn-outline">처음으로 ↑</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 10. CARDS ─────────────────────── -->
+  <section id="cards" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">10 / Components</span>
+      <h2 class="ds-section-title">Cards</h2>
+    </div>
+    <div class="ds-grid-3">
+      <div>
+        <span class="comp-demo-label">Glass Card (default)</span>
+        <div class="ds-card">
+          <div style="font-family:var(--font-numeric);font-size:10px;color:var(--color-accent-primary);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px">01 / Core</div>
+          <div style="font-family:var(--font-display);font-size:22px;margin-bottom:10px">고교학점제</div>
+          <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.8;font-weight:300">2026학년도부터 전면 시행. hover 시 테두리 변화를 확인하세요.</div>
+        </div>
+      </div>
+      <div>
+        <span class="comp-demo-label">Gradient Border Card</span>
+        <div class="ds-card-grad-border" style="height:100%">
+          <div style="font-family:var(--font-numeric);font-size:10px;color:var(--color-accent-secondary);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px">AI / Tech</div>
+          <div style="font-family:var(--font-display);font-size:22px;margin-bottom:10px">AI 문해력</div>
+          <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.8;font-weight:300">hover 시 ::before 그라디언트 테두리가 선명해집니다.</div>
+        </div>
+      </div>
+      <div>
+        <span class="comp-demo-label">Glow Card</span>
+        <div class="ds-card-glow" style="height:100%">
+          <div style="font-family:var(--font-numeric);font-size:10px;color:var(--primitive-violet-400);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px">Highlight</div>
+          <div style="font-family:var(--font-display);font-size:22px;margin-bottom:10px">통합 지원</div>
+          <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.8;font-weight:300">hover 시 violet glow가 강해집니다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 11. TAGS ─────────────────────── -->
+  <section id="tags" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">11 / Components</span>
+      <h2 class="ds-section-title">Tags & Badges</h2>
+    </div>
+    <div class="comp-demo-section">
+      <span class="comp-demo-label">Section Tags (Uppercase Label)</span>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+        <span class="ds-tag ds-tag-violet"><span class="tag-dot"></span>Core Changes</span>
+        <span class="ds-tag ds-tag-cyan"><span class="tag-dot"></span>AI Integration</span>
+        <span class="ds-tag ds-tag-pink"><span class="tag-dot"></span>Role Transformation</span>
+        <span class="ds-tag ds-tag-green"><span class="tag-dot"></span>Policy Changes</span>
+        <span class="ds-tag ds-tag-amber"><span class="tag-dot"></span>2026.3 전면 시행</span>
+      </div>
+      <span class="comp-demo-label">Badges</span>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span class="ds-badge ds-badge-outline">v1.0</span>
+        <span class="ds-badge ds-badge-solid-v">2026 Report</span>
+        <span class="ds-badge ds-badge-solid-c">NEW</span>
+        <div class="ds-nav-pill">2026 Report</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 12. DATA ─────────────────────── -->
+  <section id="data" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">12 / Components</span>
+      <h2 class="ds-section-title">Data Display</h2>
+    </div>
+    <div class="ds-grid-2">
+      <div class="comp-demo-section">
+        <span class="comp-demo-label">Stat Number</span>
+        <div class="ds-stat-num">192<span class="ds-stat-unit">학점</span></div>
+        <div style="font-size:13px;color:var(--color-text-secondary);margin-top:8px;font-weight:300">고등학생 3년간 필수 이수 학점</div>
+        <div style="margin-top:16px;height:2px;background:var(--gradient-main);width:48px;border-radius:1px"></div>
+      </div>
+      <div class="comp-demo-section">
+        <span class="comp-demo-label">Progress Bars</span>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:var(--color-text-secondary)">AI 문해력</span><span style="font-family:var(--font-numeric);font-size:10px;color:var(--color-accent-primary)">95%</span></div><div class="ds-progress-wrap"><div class="ds-progress-fill" style="background:var(--gradient-main);width:95%"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:var(--color-text-secondary)">비판적 사고</span><span style="font-family:var(--font-numeric);font-size:10px;color:var(--primitive-pink-400)">88%</span></div><div class="ds-progress-wrap"><div class="ds-progress-fill" style="background:var(--gradient-warm);width:88%"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:var(--color-text-secondary)">도메인 지식</span><span style="font-family:var(--font-numeric);font-size:10px;color:var(--primitive-cyan-400)">90%</span></div><div class="ds-progress-wrap"><div class="ds-progress-fill" style="background:var(--gradient-cool);width:90%"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ds-grid-2" style="margin-top:16px">
+      <div class="comp-demo-section">
+        <span class="comp-demo-label">Dividers</span>
+        <div class="ds-divider" style="margin:12px 0"></div>
+        <span style="font-size:11px;color:var(--color-text-tertiary)">기본 구분선 (color-border)</span>
+        <div class="ds-divider-grad" style="margin:12px 0"></div>
+        <span style="font-size:11px;color:var(--color-text-tertiary)">그라디언트 구분선</span>
+        <div style="width:1px;height:48px;background:linear-gradient(to bottom,var(--primitive-violet-500),transparent);margin:16px 0"></div>
+        <span style="font-size:11px;color:var(--color-text-tertiary)">수직 그라디언트 라인 (스크롤 인디케이터)</span>
+      </div>
+      <div class="comp-demo-section">
+        <span class="comp-demo-label">Scroll Indicator</span>
+        <div style="display:flex;justify-content:center;margin-top:12px">
+          <div class="scroll-indicator"><div class="scroll-line"></div><span>scroll</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 13. NAV ─────────────────────── -->
+  <section id="nav-comp" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">13 / Components</span>
+      <h2 class="ds-section-title">Navigation</h2>
+    </div>
+    <div class="comp-demo-section">
+      <span class="comp-demo-label">Navbar Preview</span>
+      <div style="background:rgba(5,5,10,0.7);backdrop-filter:blur(24px);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-family:var(--font-numeric);font-size:11px;font-weight:700;background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.08em">CAREER·TREND 2026</div>
+        <div style="display:flex;gap:28px">
+          <span style="font-size:12px;color:var(--color-text-secondary)">수치</span>
+          <span style="font-size:12px;color:var(--color-text-secondary)">변화</span>
+          <span style="font-size:12px;color:var(--color-text)">AI</span>
+          <span style="font-size:12px;color:var(--color-text-secondary)">역량</span>
+        </div>
+        <div class="ds-nav-pill">2026 Report</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 14. EFFECTS ─────────────────────── -->
+  <section id="effects" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">14 / Effects</span>
+      <h2 class="ds-section-title">Surface Effects</h2>
+    </div>
+    <div class="ds-grid-3">
+      <div><span class="comp-demo-label">Glassmorphism</span><div class="effect-box effect-glass"><span class="effect-label">Glass Card</span><span style="font-size:11px;color:var(--color-text-tertiary)">backdrop-filter: blur(20px)<br>saturate(1.4)</span></div></div>
+      <div><span class="comp-demo-label">Grain Texture</span><div class="effect-box effect-grain"><span class="effect-label" style="position:relative;z-index:1">Grain Overlay</span><span style="font-size:11px;color:var(--color-text-tertiary);position:relative;z-index:1">SVG fractalNoise<br>opacity: 0.032</span></div></div>
+      <div><span class="comp-demo-label">Glow Border</span><div class="effect-box effect-glow-border"><span class="effect-label">Glow Border</span><span style="font-size:11px;color:var(--color-text-tertiary)">border: rgba(violet, 0.3)<br>box-shadow glow</span></div></div>
+      <div><span class="comp-demo-label">Inset Shadow</span><div class="effect-box effect-inset"><span class="effect-label">Inset Shadow</span><span style="font-size:11px;color:var(--color-text-tertiary)">inset 0 2px 8px<br>rgba(0,0,0,0.4)</span></div></div>
+      <div><span class="comp-demo-label">Spotlight Grid</span><div class="spotlight-demo"><div class="spotlight-glow"></div><span style="position:relative;z-index:1;font-family:var(--font-numeric);font-size:9px;color:var(--color-text-tertiary);letter-spacing:0.1em">SPOTLIGHT + GRID</span></div></div>
+      <div><span class="comp-demo-label">Gradient Text</span><div class="effect-box" style="background:var(--color-surface);border:1px solid var(--color-border)"><div style="font-family:var(--font-display);font-size:32px;background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent">그라디언트</div><span style="font-size:11px;color:var(--color-text-tertiary)">background-clip: text</span></div></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 15. CURSOR ─────────────────────── -->
+  <section id="cursor" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">15 / Effects</span>
+      <h2 class="ds-section-title">Cursor System</h2>
+    </div>
+    <div class="ds-grid-2">
+      <div class="comp-demo-section">
+        <span class="comp-demo-label">Cursor Components</span>
+        <div style="display:flex;align-items:center;gap:32px;padding:24px 0">
+          <div style="text-align:center"><div class="cursor-dot-demo" style="margin:0 auto 8px"></div><span style="font-family:var(--font-numeric);font-size:9px;color:var(--color-text-tertiary)">cursor-dot<br>6px · violet</span></div>
+          <div style="text-align:center"><div class="cursor-ring-demo" style="margin:0 auto 8px"></div><span style="font-family:var(--font-numeric);font-size:9px;color:var(--color-text-tertiary)">cursor-ring<br>36px · lagging</span></div>
+          <div style="text-align:center">
+            <div class="cursor-trail">
+              <div class="cursor-trail-dot" style="width:6px;height:6px;--op:0.9;animation-delay:0s"></div>
+              <div class="cursor-trail-dot" style="width:5px;height:5px;--op:0.6;animation-delay:0.1s"></div>
+              <div class="cursor-trail-dot" style="width:4px;height:4px;--op:0.4;animation-delay:0.2s"></div>
+              <div class="cursor-trail-dot" style="width:3px;height:3px;--op:0.2;animation-delay:0.3s"></div>
+            </div>
+            <span style="font-family:var(--font-numeric);font-size:9px;color:var(--color-text-tertiary);display:block;margin-top:8px">trail effect</span>
+          </div>
+        </div>
+      </div>
+      <div class="comp-demo-section">
+        <span class="comp-demo-label">Cursor Behavior</span>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)"><span style="font-size:12px;color:var(--color-text-secondary)">기본 상태</span><span style="font-family:var(--font-numeric);font-size:10px;color:var(--color-text-tertiary)">6px dot · 36px ring</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)"><span style="font-size:12px;color:var(--color-text-secondary)">링크/버튼 호버</span><span style="font-family:var(--font-numeric);font-size:10px;color:var(--primitive-cyan-400)">12px dot · 56px ring</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0"><span style="font-size:12px;color:var(--color-text-secondary)">링 추적 지연</span><span style="font-family:var(--font-numeric);font-size:10px;color:var(--color-text-tertiary)">lerp factor 0.18</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 16. AURORA ─────────────────────── -->
+  <section id="aurora" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">16 / Effects</span>
+      <h2 class="ds-section-title">Aurora & Blob System</h2>
+    </div>
+    <div class="comp-demo-section">
+      <span class="comp-demo-label">Aurora Blob Preview</span>
+      <div class="aurora-demo" style="height:180px">
+        <div class="aurora-blob" style="width:260px;height:260px;background:#8b5cf6;opacity:0.18;top:-80px;left:-40px;animation:blobFloat 18s ease-in-out infinite alternate"></div>
+        <div class="aurora-blob" style="width:200px;height:200px;background:#06b6d4;opacity:0.15;top:20px;right:-20px;animation:blobFloat 22s ease-in-out infinite alternate"></div>
+        <div class="aurora-blob" style="width:180px;height:180px;background:#ec4899;opacity:0.12;bottom:-60px;left:40%;animation:blobFloat 25s ease-in-out infinite alternate"></div>
+        <div style="position:relative;z-index:1;text-align:center;padding-top:60px;font-family:var(--font-numeric);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3)">filter: blur(120px) · opacity: 0.18 · animation: blobFloat</div>
+      </div>
+    </div>
+    <div class="ds-grid-4" style="margin-top:16px">
+      <div class="token-card"><div class="token-label">blob-1 · Violet</div><div style="width:100%;height:32px;background:#8b5cf6;filter:blur(8px);border-radius:50%;margin:8px 0"></div><div class="token-value">#8b5cf6</div><div class="token-desc">상단 좌측 · 18s</div></div>
+      <div class="token-card"><div class="token-label">blob-2 · Cyan</div><div style="width:100%;height:32px;background:#06b6d4;filter:blur(8px);border-radius:50%;margin:8px 0"></div><div class="token-value">#06b6d4</div><div class="token-desc">중단 우측 · 22s</div></div>
+      <div class="token-card"><div class="token-label">blob-3 · Pink</div><div style="width:100%;height:32px;background:#ec4899;filter:blur(8px);border-radius:50%;margin:8px 0"></div><div class="token-value">#ec4899</div><div class="token-desc">하단 중앙 · 25s</div></div>
+      <div class="token-card"><div class="token-label">blob-4 · Green</div><div style="width:100%;height:32px;background:#10b981;filter:blur(8px);border-radius:50%;margin:8px 0"></div><div class="token-value">#10b981</div><div class="token-desc">하단 좌측 · 19s</div></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 17. CSS TOKENS ─────────────────────── -->
+  <section id="tokens-code" class="ds-section">
+    <div class="ds-section-header">
+      <span class="ds-section-num">17 / Tokens</span>
+      <h2 class="ds-section-title">CSS Variables</h2>
+      <p class="ds-section-desc">이 디자인 시스템의 전체 CSS 변수 선언. :root에 추가하여 즉시 사용 가능합니다.</p>
+    </div>
+    <div class="ds-code">
+<span class="code-c">/* ── Color Tokens ── */</span>
+<span class="code-k">--color-bg:</span>             <span class="code-s">#05050a</span>;
+<span class="code-k">--color-surface:</span>        <span class="code-s">rgba(255,255,255,0.03)</span>;
+<span class="code-k">--color-surface-hover:</span>  <span class="code-s">rgba(255,255,255,0.06)</span>;
+<span class="code-k">--color-border:</span>         <span class="code-s">rgba(255,255,255,0.07)</span>;
+<span class="code-k">--color-border-hover:</span>   <span class="code-s">rgba(255,255,255,0.14)</span>;
+<span class="code-k">--color-text:</span>           <span class="code-s">#f0f0f5</span>;
+<span class="code-k">--color-text-secondary:</span> <span class="code-s">rgba(240,240,245,0.55)</span>;
+<span class="code-k">--color-text-tertiary:</span>  <span class="code-s">rgba(240,240,245,0.28)</span>;
+<span class="code-k">--color-accent-primary:</span> <span class="code-s">#8b5cf6</span>;
+
+<span class="code-c">/* ── Gradient Tokens ── */</span>
+<span class="code-k">--gradient-main:</span>  <span class="code-s">linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%)</span>;
+<span class="code-k">--gradient-warm:</span>  <span class="code-s">linear-gradient(135deg, #ec4899 0%, #f59e0b 100%)</span>;
+<span class="code-k">--gradient-cool:</span>  <span class="code-s">linear-gradient(135deg, #06b6d4 0%, #10b981 100%)</span>;
+<span class="code-k">--gradient-deep:</span>  <span class="code-s">linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)</span>;
+
+<span class="code-c">/* ── Typography ── */</span>
+<span class="code-k">--font-display:</span>  <span class="code-s">'Black Han Sans', sans-serif</span>;
+<span class="code-k">--font-numeric:</span>  <span class="code-s">'Unbounded', sans-serif</span>;
+<span class="code-k">--font-body:</span>     <span class="code-s">'Noto Sans KR', sans-serif</span>;
+
+<span class="code-c">/* ── Motion ── */</span>
+<span class="code-k">--ease-spring:</span>   <span class="code-s">cubic-bezier(0.34, 1.56, 0.64, 1)</span>;
+<span class="code-k">--ease-out:</span>      <span class="code-s">cubic-bezier(0.16, 1, 0.3, 1)</span>;
+<span class="code-k">--ease-in-out:</span>   <span class="code-s">cubic-bezier(0.65, 0, 0.35, 1)</span>;
+<span class="code-k">--dur-fast:</span>      <span class="code-s">150ms</span>;
+<span class="code-k">--dur-normal:</span>    <span class="code-s">300ms</span>;
+<span class="code-k">--dur-slow:</span>      <span class="code-s">600ms</span>;
+
+<span class="code-c">/* ── Radius ── */</span>
+<span class="code-k">--radius-sm:</span>     <span class="code-s">8px</span>;  <span class="code-k">--radius-md:</span> <span class="code-s">12px</span>;  <span class="code-k">--radius-lg:</span> <span class="code-s">16px</span>;
+<span class="code-k">--radius-xl:</span>     <span class="code-s">20px</span>; <span class="code-k">--radius-2xl:</span><span class="code-s">24px</span>;  <span class="code-k">--radius-full:</span><span class="code-s">9999px</span>;
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+// Sidebar active state on scroll
+function scrollTo(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
+
+const links = document.querySelectorAll('.sidebar-link');
+const sections = document.querySelectorAll('.ds-section');
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      links.forEach(l => l.classList.remove('active'));
+      const fn = l => l.getAttribute('onclick')?.includes(e.target.id);
+      const active = [...links].find(fn);
+      if(active) active.classList.add('active');
+    }
+  });
+},{threshold:0.2, rootMargin:'-60px 0px -40% 0px'});
+
+sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
